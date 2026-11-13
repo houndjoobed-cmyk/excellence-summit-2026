@@ -1,0 +1,11 @@
+# Raw unoptimized source photos (served images live under public/images/)
+Assets/
+
+# Local environment, build caches & Neon local state
+.env
+.env.local
+.env.*.local
+.neon/
+.next/
+*.tsbuildinfo
+

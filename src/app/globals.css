@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --color-royal-950: #020822;
+  --color-royal-900: #041247;
+  --color-royal-800: #072078;
+  --color-royal-700: #0e35b3;
+
+  --color-gold-200: #fef0b3;
+  --color-gold-300: #fde073;
+  --color-gold-400: #f3c638;
+  --color-gold-500: #d9a416;
+  --color-gold-600: #9f7006;
+
+  --color-crimson-500: #dc2626;
+  --color-crimson-600: #b91c1c;
+
+  --color-ivory: #fafaf7;
+  --color-ink: #071338;
+  --color-ink-muted: #4b5578;
+}
+
+:root {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-ivory);
+    color: var(--color-ink);
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-code {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Subtle royal gold gradient text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #fef0b3 0%, #f3c638 45%, #d9a416 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes gold-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Luminous sweeping metallic gold shimmer for hero display headline */
+.text-gold-shimmer {
+  background-image: linear-gradient(
+    110deg,
+    #d9a416 0%,
+    #f3c638 24%,
+    #fff8db 48%,
+    #fef0b3 54%,
+    #f3c638 76%,
+    #d9a416 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gold-shimmer 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-gold-shimmer {
+    animation: none;
+    background-position: 50% 50%;
+  }
+}
+
+/* Subtle ambient dot grid for royal navy hero & dark bands */
+.bg-royal-grid {
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(14, 53, 179, 0.45) 0%, transparent 62%),
+    radial-gradient(circle at 82% 24%, rgba(243, 198, 56, 0.14) 0%, transparent 40%),
+    radial-gradient(circle at 18% 72%, rgba(220, 38, 38, 0.12) 0%, transparent 38%),
+    linear-gradient(180deg, #020822 0%, #041247 52%, #020b30 100%);
+}
+
+/* Fine golden hairline divider */
+.gold-hairline {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(243, 198, 56, 0.55) 50%,
+    transparent 100%
+  );
+}
+
+/* Clean print layout for Official Badge Pass */
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+  }
+  .print-pass-only {
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    page-break-inside: avoid;
+  }
+}
+
