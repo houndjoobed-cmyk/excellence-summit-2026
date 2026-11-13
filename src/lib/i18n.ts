@@ -185,6 +185,12 @@ export interface Dictionary {
     passLocation: string;
     downloadPng: string;
     printPass: string;
+    savePreviewTitle: string;
+    iosSaveHint: string;
+    shareOrSaveBtn: string;
+    downloadFallbackLink: string;
+    downloadError: string;
+    closePreview: string;
   };
   support: {
     fabLabel: string;
@@ -437,6 +443,14 @@ const FR_DICT: Dictionary = {
     passLocation: "Cité d'Excellence & Majestic Cadjehoun",
     downloadPng: "Télécharger en PNG",
     printPass: "Imprimer",
+    savePreviewTitle: "Enregistrer votre badge",
+    iosSaveHint:
+      "Sur iPhone/iPad : touchez « Partager / Enregistrer » ou maintenez le doigt sur l'image ci-dessous puis choisissez « Enregistrer dans Photos ».",
+    shareOrSaveBtn: "Partager / Enregistrer",
+    downloadFallbackLink: "Télécharger le fichier PNG",
+    downloadError:
+      "Impossible de générer l'image du badge. Essayez « Imprimer » ou rechargez la page.",
+    closePreview: "Fermer",
   },
   support: {
     fabLabel: "Poser une question à l'équipe",
@@ -689,6 +703,14 @@ const EN_DICT: Dictionary = {
     passLocation: "Cité d'Excellence & Majestic Cadjehoun",
     downloadPng: "Download PNG",
     printPass: "Print",
+    savePreviewTitle: "Save Your Pass",
+    iosSaveHint:
+      "On iPhone/iPad: tap \"Share / Save\" or press and hold the image below, then choose \"Save to Photos\".",
+    shareOrSaveBtn: "Share / Save",
+    downloadFallbackLink: "Download PNG file",
+    downloadError:
+      "Could not generate the badge PNG right now. Try \"Print\" or reload the page.",
+    closePreview: "Close",
   },
   support: {
     fabLabel: "Ask the team a question",

@@ -8,6 +8,14 @@ import {
 
 export type EmailProvider = "brevo" | "resend";
 
+export interface EmailSendResult {
+  sent: boolean;
+  reason?: string;
+  detail?: string;
+}
+
+const SINGLE_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 function escapeHtml(value: string): string {
   return value
     .replaceAll("&", "&amp;")
@@ -55,6 +63,170 @@ export function getEmailProvider(): EmailProvider | null {
 
 export function isEmailConfigured(): boolean {
   return getEmailProvider() !== null;
+}
+
+interface DeliverEmailInput {
+  to: string;
+  toName?: string;
+  replyTo?: { email: string; name?: string };
+  subject: string;
+  htmlContent: string;
+  attachment?: {
+    filename: string;
+    content: Buffer;
+    contentId?: string;
+  };
+}
+
+function extractAddress(raw: string | undefined): string {
+  const trimmed = raw?.trim() || "";
+  const angle = trimmed.match(/<([^>]+)>/);
+  return (angle ? angle[1] : trimmed).trim();
+}
+
+function classifyBrevoFailure(status: number, bodyText: string): EmailSendResult {
+  let apiMessage = "";
+  try {
+    const parsed = JSON.parse(bodyText) as { code?: string; message?: string };
+    apiMessage = parsed.message || "";
+  } catch {
+    apiMessage = bodyText.slice(0, 180);
+  }
+
+  if (
+    status === 401 ||
+    /unrecognized ip|authorised_ips|authorized ip/i.test(bodyText)
+  ) {
+    return {
+      sent: false,
+      reason: "BREVO_UNAUTHORIZED_IP",
+      detail:
+        "Brevo bloque les adresses IP dynamiques de Vercel. Désactivez le blocage IP dans Brevo → Sécurité → Adresses IP autorisées.",
+    };
+  }
+
+  return {
+    sent: false,
+    reason: "BREVO_ERROR",
+    detail: apiMessage ? `Brevo HTTP ${status}: ${apiMessage}` : `Brevo HTTP ${status}`,
+  };
+}
+
+async function deliverViaBrevo(input: DeliverEmailInput): Promise<EmailSendResult> {
+  const apiKey = process.env.BREVO_API_KEY!.trim();
+  const senderEmail = process.env.BREVO_SENDER_EMAIL!.trim();
+  const senderName =
+    process.env.BREVO_SENDER_NAME?.trim() || "Excellence Summit 2026";
+
+  if (!SINGLE_EMAIL_RE.test(senderEmail)) {
+    console.error("[Brevo] invalid BREVO_SENDER_EMAIL format");
+    return {
+      sent: false,
+      reason: "BREVO_INVALID_SENDER",
+      detail: "Adresse BREVO_SENDER_EMAIL invalide.",
+    };
+  }
+
+  const payload: Record<string, unknown> = {
+    sender: { name: senderName, email: senderEmail },
+    replyTo: input.replyTo
+      ? {
+          email: input.replyTo.email,
+          name: input.replyTo.name || input.replyTo.email,
+        }
+      : { name: senderName, email: senderEmail },
+    to: [
+      {
+        email: input.to,
+        name: input.toName || input.to,
+      },
+    ],
+    subject: input.subject,
+    htmlContent: input.htmlContent,
+  };
+
+  if (input.attachment) {
+    payload.attachment = [
+      {
+        name: input.attachment.filename,
+        content: input.attachment.content.toString("base64"),
+      },
+    ];
+  }
+
+  try {
+    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      signal: AbortSignal.timeout(15_000),
+      headers: {
+        accept: "application/json",
+        "api-key": apiKey,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => "");
+      console.error(
+        `[Brevo] failed to send email (HTTP ${response.status}):`,
+        errorText,
+      );
+      return classifyBrevoFailure(response.status, errorText);
+    }
+
+    return { sent: true };
+  } catch (err) {
+    console.error("[Brevo] exception while sending email:", err);
+    return {
+      sent: false,
+      reason: "BREVO_EXCEPTION",
+      detail: err instanceof Error ? err.message : "Erreur réseau Brevo.",
+    };
+  }
+}
+
+async function deliverViaResend(input: DeliverEmailInput): Promise<EmailSendResult> {
+  const resend = new Resend(process.env.RESEND_API_KEY!.trim());
+  const fromEmail =
+    process.env.RESEND_FROM_EMAIL?.trim() ||
+    "Excellence Summit <onboarding@resend.dev>";
+
+  try {
+    const result = await resend.emails.send({
+      from: fromEmail,
+      to: [input.to],
+      replyTo: input.replyTo?.email,
+      subject: input.subject,
+      html: input.htmlContent,
+      attachments: input.attachment
+        ? [
+            {
+              filename: input.attachment.filename,
+              content: input.attachment.content,
+              contentId: input.attachment.contentId,
+            },
+          ]
+        : undefined,
+    });
+
+    if (result.error) {
+      console.error("[Resend] failed to send email:", result.error);
+      return {
+        sent: false,
+        reason: "RESEND_ERROR",
+        detail: result.error.message,
+      };
+    }
+    return { sent: true };
+  } catch (err) {
+    console.error("[Resend] exception while sending email:", err);
+    return {
+      sent: false,
+      reason: "RESEND_EXCEPTION",
+      detail: err instanceof Error ? err.message : "Erreur réseau Resend.",
+    };
+  }
 }
 
 export interface SendBadgeEmailParams {
@@ -158,125 +330,9 @@ function buildBadgeEmailHtml(params: BuildBadgeHtmlParams): string {
 </html>`.trim();
 }
 
-async function sendViaBrevo(
-  params: SendBadgeEmailParams,
-  subject: string,
-  verificationUrl: string,
-  qrBuffer: Buffer,
-): Promise<{ sent: boolean; reason?: string }> {
-  const apiKey = process.env.BREVO_API_KEY!.trim();
-  const senderEmail = process.env.BREVO_SENDER_EMAIL!.trim();
-  const senderName =
-    process.env.BREVO_SENDER_NAME?.trim() || "Excellence Summit 2026";
-
-  const qrImageSrc = buildQrImageUrl(
-    params.badgeCode,
-    params.qrToken,
-    params.baseUrl,
-  );
-  const htmlContent = buildBadgeEmailHtml({
-    firstName: params.firstName,
-    lastName: params.lastName,
-    badgeCode: params.badgeCode,
-    locale: params.locale,
-    verificationUrl,
-    qrImageSrc,
-  });
-
-  try {
-    const response = await fetch("https://api.brevo.com/v3/smtp/email", {
-      method: "POST",
-      signal: AbortSignal.timeout(10_000),
-      headers: {
-        accept: "application/json",
-        "api-key": apiKey,
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        sender: { name: senderName, email: senderEmail },
-        replyTo: { name: senderName, email: senderEmail },
-        to: [
-          {
-            email: params.to,
-            name: `${params.firstName} ${params.lastName}`.trim(),
-          },
-        ],
-        subject,
-        htmlContent,
-        attachment: [
-          {
-            name: `badge-${params.badgeCode}.png`,
-            content: qrBuffer.toString("base64"),
-          },
-        ],
-      }),
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text().catch(() => "");
-      console.error(
-        `[Brevo] failed to send badge email (HTTP ${response.status}):`,
-        errorText,
-      );
-      return { sent: false, reason: "BREVO_ERROR" };
-    }
-
-    return { sent: true };
-  } catch (err) {
-    console.error("[Brevo] exception while sending badge email:", err);
-    return { sent: false, reason: "BREVO_EXCEPTION" };
-  }
-}
-
-async function sendViaResend(
-  params: SendBadgeEmailParams,
-  subject: string,
-  verificationUrl: string,
-  qrBuffer: Buffer,
-): Promise<{ sent: boolean; reason?: string }> {
-  const resend = new Resend(process.env.RESEND_API_KEY!.trim());
-  const fromEmail =
-    process.env.RESEND_FROM_EMAIL?.trim() ||
-    "Excellence Summit <onboarding@resend.dev>";
-
-  const html = buildBadgeEmailHtml({
-    firstName: params.firstName,
-    lastName: params.lastName,
-    badgeCode: params.badgeCode,
-    locale: params.locale,
-    verificationUrl,
-    qrImageSrc: "cid:badge-qr",
-  });
-
-  try {
-    const result = await resend.emails.send({
-      from: fromEmail,
-      to: [params.to],
-      subject,
-      html,
-      attachments: [
-        {
-          filename: `badge-${params.badgeCode}.png`,
-          content: qrBuffer,
-          contentId: "badge-qr",
-        },
-      ],
-    });
-
-    if (result.error) {
-      console.error("[Resend] failed to send badge email:", result.error);
-      return { sent: false, reason: "RESEND_ERROR" };
-    }
-    return { sent: true };
-  } catch (err) {
-    console.error("[Resend] exception while sending badge email:", err);
-    return { sent: false, reason: "RESEND_EXCEPTION" };
-  }
-}
-
 export async function sendBadgeEmail(
   params: SendBadgeEmailParams,
-): Promise<{ sent: boolean; reason?: string }> {
+): Promise<EmailSendResult> {
   const provider = getEmailProvider();
   if (!provider) {
     return { sent: false, reason: "EMAIL_NOT_CONFIGURED" };
@@ -293,8 +349,115 @@ export async function sendBadgeEmail(
       ? `Your Official QR Badge (${params.badgeCode}) — Excellence Summit 2026`
       : `Votre Badge QR Officiel (${params.badgeCode}) — Excellence Summit 2026`;
 
-  if (provider === "brevo") {
-    return sendViaBrevo(params, subject, verificationUrl, qrBuffer);
+  const qrImageSrc =
+    provider === "brevo"
+      ? buildQrImageUrl(params.badgeCode, params.qrToken, params.baseUrl)
+      : "cid:badge-qr";
+
+  const htmlContent = buildBadgeEmailHtml({
+    firstName: params.firstName,
+    lastName: params.lastName,
+    badgeCode: params.badgeCode,
+    locale: params.locale,
+    verificationUrl,
+    qrImageSrc,
+  });
+
+  const input: DeliverEmailInput = {
+    to: params.to,
+    toName: `${params.firstName} ${params.lastName}`.trim(),
+    subject,
+    htmlContent,
+    attachment: {
+      filename: `badge-${params.badgeCode}.png`,
+      content: qrBuffer,
+      contentId: "badge-qr",
+    },
+  };
+
+  return provider === "brevo"
+    ? deliverViaBrevo(input)
+    : deliverViaResend(input);
+}
+
+export interface SendSupportNotificationParams {
+  name: string;
+  email: string;
+  phone?: string | null;
+  message: string;
+  locale: Locale;
+}
+
+/**
+ * Forwards support widget questions to the organizer mailbox via the active email provider.
+ */
+export async function sendSupportNotificationEmail(
+  params: SendSupportNotificationParams,
+): Promise<EmailSendResult> {
+  const provider = getEmailProvider();
+  if (!provider) {
+    return { sent: false, reason: "EMAIL_NOT_CONFIGURED" };
   }
-  return sendViaResend(params, subject, verificationUrl, qrBuffer);
+
+  const adminRecipient =
+    extractAddress(process.env.ADMIN_NOTIFICATION_EMAIL) ||
+    extractAddress(process.env.BREVO_SENDER_EMAIL) ||
+    extractAddress(process.env.RESEND_FROM_EMAIL);
+
+  if (!SINGLE_EMAIL_RE.test(adminRecipient)) {
+    return { sent: false, reason: "NO_RECIPIENT" };
+  }
+
+  const safeName = escapeHtml(params.name);
+  const safeEmail = escapeHtml(params.email);
+  const safePhone = escapeHtml(params.phone?.trim() || "Non renseigné");
+  const safeMessage = escapeHtml(params.message).replaceAll("\n", "<br/>");
+
+  const htmlContent = `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="utf-8" /></head>
+<body style="margin:0;padding:24px;background:#f4f5f8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#071338;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="560" cellspacing="0" cellpadding="0" style="max-width:560px;width:100%;background:#ffffff;border-radius:14px;border:1px solid #e2e6f0;overflow:hidden;">
+          <tr>
+            <td style="background:#041247;padding:20px 24px;border-bottom:3px solid #f3c638;">
+              <p style="margin:0;font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:#fde073;font-weight:700;">
+                Support · Excellence Summit 2026
+              </p>
+              <h1 style="margin:6px 0 0;font-size:20px;color:#ffffff;font-family:Georgia,serif;">
+                Nouveau message visiteur
+              </h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px;font-size:14px;line-height:1.6;color:#273052;">
+              <p style="margin:0 0 8px;"><strong>Nom :</strong> ${safeName}</p>
+              <p style="margin:0 0 8px;"><strong>E-mail :</strong> ${safeEmail}</p>
+              <p style="margin:0 0 16px;"><strong>Téléphone :</strong> ${safePhone}</p>
+              <div style="background:#f8f9fc;border-left:3px solid #f3c638;padding:14px 16px;border-radius:8px;">
+                ${safeMessage}
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`.trim();
+
+  const input: DeliverEmailInput = {
+    to: adminRecipient,
+    toName: "Équipe Excellence Summit 2026",
+    replyTo: { email: params.email, name: params.name },
+    subject: `[Support Excellence Summit] Question de ${params.name}`,
+    htmlContent,
+  };
+
+  return provider === "brevo"
+    ? deliverViaBrevo(input)
+    : deliverViaResend(input);
 }

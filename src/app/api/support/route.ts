@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getDb, isDatabaseConfigured } from "@/db";
 import { supportMessages } from "@/db/schema";
+import { sendSupportNotificationEmail } from "@/lib/email";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
 import { supportMessageSchema } from "@/lib/validation";
 
@@ -67,7 +68,32 @@ export async function POST(request: Request) {
       })
       .returning({ id: supportMessages.id, createdAt: supportMessages.createdAt });
 
-    return NextResponse.json({ message: saved }, { status: 201 });
+    let emailSent = false;
+    let emailReason: string | undefined;
+    try {
+      const emailResult = await sendSupportNotificationEmail({
+        name: parsed.data.name,
+        email: parsed.data.email,
+        phone: parsed.data.phone || null,
+        message: parsed.data.message,
+        locale: parsed.data.locale,
+      });
+      emailSent = emailResult.sent;
+      emailReason = emailResult.reason;
+      if (!emailResult.sent) {
+        console.warn("[POST /api/support] Email notification skipped/failed:", {
+          reason: emailResult.reason,
+          detail: emailResult.detail,
+        });
+      }
+    } catch (emailErr) {
+      console.error("[POST /api/support] Unexpected email error:", emailErr);
+    }
+
+    return NextResponse.json(
+      { message: saved, emailSent, emailReason },
+      { status: 201 },
+    );
   } catch (err) {
     console.error("[POST /api/support] error:", err);
     return NextResponse.json(

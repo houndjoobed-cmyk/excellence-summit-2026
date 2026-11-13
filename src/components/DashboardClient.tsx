@@ -357,13 +357,14 @@ function DashboardView() {
         body: JSON.stringify({ resendEmail: true }),
       });
       const data = (await res.json().catch(() => null)) as {
-        emailResult?: { sent: boolean; reason?: string };
+        emailResult?: { sent: boolean; reason?: string; detail?: string };
       } | null;
       if (data?.emailResult?.sent) {
         showToast(`E-mail renvoyé à ${item.email}.`);
         await fetchDashboard();
       } else {
         const reason = data?.emailResult?.reason;
+        const detail = data?.emailResult?.detail;
         const missingConfig =
           reason === "EMAIL_NOT_CONFIGURED" ||
           reason === "RESEND_NOT_CONFIGURED";
@@ -372,9 +373,13 @@ function DashboardView() {
             ? isEn
               ? "Email provider not configured yet (set BREVO_API_KEY + BREVO_SENDER_EMAIL, or RESEND_API_KEY)."
               : "Envoi impossible : configurez BREVO_API_KEY + BREVO_SENDER_EMAIL (ou RESEND_API_KEY)."
-            : isEn
-              ? `Email delivery failed (${reason || "provider error"}). Check sender verification and server logs.`
-              : `Échec d'envoi (${reason || "erreur fournisseur"}). Vérifiez l'expéditeur validé et les logs serveur.`,
+            : reason === "BREVO_UNAUTHORIZED_IP"
+              ? isEn
+                ? "Brevo blocked Vercel's dynamic IP. Disable IP blocking in Brevo → Security → Authorized IPs."
+                : "Brevo bloque l'IP Vercel. Désactivez le blocage IP dans Brevo → Sécurité → Adresses IP autorisées."
+              : isEn
+                ? `Email delivery failed (${detail || reason || "provider error"}).`
+                : `Échec d'envoi (${detail || reason || "erreur fournisseur"}).`,
         );
       }
     } finally {
