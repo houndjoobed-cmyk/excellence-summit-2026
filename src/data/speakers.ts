@@ -7,6 +7,7 @@ export interface SpeakerProfile {
   flagEmoji: string;
   image: string;
   isCutout?: boolean;
+  hasMasterclass?: boolean;
   masterclassFocus: { fr: string; en: string };
   bio: { fr: string[]; en: string[] };
 }
@@ -27,6 +28,7 @@ export const GUEST_SPEAKERS: SpeakerProfile[] = [
     country: { fr: "France", en: "France" },
     flagEmoji: "🇫🇷",
     image: "/images/speakers/pierre-gospiel.webp",
+    hasMasterclass: false,
     masterclassFocus: {
       fr: "Impact évangélique & audace de la foi",
       en: "Evangelistic Impact & Boldness of Faith",
@@ -53,18 +55,19 @@ export const GUEST_SPEAKERS: SpeakerProfile[] = [
     country: { fr: "Gabon", en: "Gabon" },
     flagEmoji: "🇬🇦",
     image: "/images/speakers/mike-jocktane.webp",
+    hasMasterclass: true,
     masterclassFocus: {
-      fr: "Leadership royal, gouvernance & excellence",
-      en: "Royal Leadership, Governance & Excellence",
+      fr: "Révéler les talents, propulser les entrepreneurs",
+      en: "Revealing Talents, Propelling Entrepreneurs",
     },
     bio: {
       fr: [
         "Évêque et figure influente originaire du Gabon, Mike Jocktane est reconnu pour son enseignement structurant sur le leadership d'autorité, l'intégrité morale et la transformation sociétale.",
-        "Ses sessions de masterclass aborderont l'exercice responsable de la royauté spirituelle et stratégique face aux défis du leadership moderne.",
+        "Sa masterclass « Révéler les talents, propulser les entrepreneurs » donnera des clés concrètes pour identifier le potentiel en chacun et bâtir des projets entrepreneuriaux à fort impact.",
       ],
       en: [
         "A bishop and prominent leader from Gabon, Mike Jocktane is known for his foundational teaching on principled leadership, moral integrity, and societal transformation.",
-        "His masterclass sessions address how to exercise spiritual and strategic authority responsibly amid modern leadership challenges.",
+        "His masterclass \"Revealing Talents, Propelling Entrepreneurs\" delivers practical keys to unlocking hidden potential and scaling high-impact ventures.",
       ],
     },
   },
@@ -79,18 +82,19 @@ export const GUEST_SPEAKERS: SpeakerProfile[] = [
     country: { fr: "Côte d'Ivoire", en: "Côte d'Ivoire" },
     flagEmoji: "🇨🇮",
     image: "/images/speakers/dieunedort-kamdem.webp",
+    hasMasterclass: true,
     masterclassFocus: {
-      fr: "Dimension prophétique & alignement de destinée",
-      en: "Prophetic Dimension & Destiny Alignment",
+      fr: "Commencer l'entrepreneuriat avec 0 franc",
+      en: "Starting Entrepreneurship with 0 Francs",
     },
     bio: {
       fr: [
         "Archevêque exerçant en Côte d'Ivoire, Dieunedort Kamdem accompagne de nombreux responsables et ministères dans l'édification spirituelle, la sagesse prophétique et la structuration d'œuvres durables.",
-        "À l'Excellence Summit, il enseignera comment bâtir avec discernement prophétique et rigueur d'exécution pour marquer durablement sa génération.",
+        "À travers sa masterclass « Commencer l'entrepreneuriat avec 0 franc », il montrera comment lancer et développer une activité viable en mobilisant la vision, les ressources relationnelles et la discipline d'exécution.",
       ],
       en: [
         "An archbishop serving in Côte d'Ivoire, Dieunedort Kamdem mentors leaders and ministries in spiritual edification, prophetic wisdom, and building enduring works.",
-        "At Excellence Summit, he will teach how to build with prophetic discernment and disciplined execution to leave a lasting generational mark.",
+        "Through his masterclass \"Starting Entrepreneurship with 0 Francs\", he equips attendees to launch and grow sustainable ventures using vision, network leverage, and disciplined execution.",
       ],
     },
   },
@@ -105,22 +109,27 @@ export const GUEST_SPEAKERS: SpeakerProfile[] = [
     country: { fr: "Togo", en: "Togo" },
     flagEmoji: "🇹🇬",
     image: "/images/speakers/mawuena-drah.webp",
+    hasMasterclass: true,
     masterclassFocus: {
-      fr: "Fondements apostoliques & transmission (2 Tim. 2:2)",
-      en: "Apostolic Foundations & Mentorship (2 Tim. 2:2)",
+      fr: "Ministère prophétique",
+      en: "Prophetic Ministry",
     },
     bio: {
       fr: [
         "Apôtre originaire du Togo, Mawuena Drah se consacre à la formation de leaders solides, enracinés dans les Écritures et engagés dans l'expansion du Royaume.",
-        "Ses interventions mettront en lumière la transmission fidèle de l'appel et les principes apostoliques pour bâtir une génération prophétique et royale.",
+        "Sa masterclass « Ministère prophétique » approfondira l'écoute de Dieu, le discernement spirituel et l'exercice fidèle du don prophétique pour édifier l'Église et orienter les destinées.",
       ],
       en: [
         "An apostle from Togo, Mawuena Drah is dedicated to raising grounded leaders rooted in Scripture and committed to Kingdom advancement.",
-        "His masterclass sessions highlight faithful mentorship and apostolic principles for building a prophetic and royal generation.",
+        "His masterclass \"Prophetic Ministry\" unpacks spiritual discernment, hearing God clearly, and exercising the prophetic gift faithfully to edify the Church and guide destinies.",
       ],
     },
   },
 ];
+
+export const MASTERCLASS_SPEAKERS: SpeakerProfile[] = GUEST_SPEAKERS.filter(
+  (s) => s.hasMasterclass,
+);
 
 export const HOST_COUPLE: SpeakerProfile[] = [
   {

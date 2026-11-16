@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { CONVENTION_SESSIONS } from "@/data/event";
-import { GUEST_SPEAKERS } from "@/data/speakers";
+import { MASTERCLASS_SPEAKERS } from "@/data/speakers";
 
-const speakerIds = GUEST_SPEAKERS.map((s) => s.id);
+const masterclassSpeakerIds = MASTERCLASS_SPEAKERS.map((s) => s.id);
 const sessionKeys = CONVENTION_SESSIONS.map((s) => s.key);
 
 export const registrationSchema = z.object({
@@ -23,10 +23,13 @@ export const registrationSchema = z.object({
   preferredSpeakers: z
     .array(z.string())
     .default([])
-    .transform((items) => items.filter((id) => speakerIds.includes(id))),
+    .transform((items) =>
+      items.filter((id) => masterclassSpeakerIds.includes(id)),
+    )
+    .refine((items) => items.length >= 1, "MASTERCLASS_REQUIRED"),
   preferredTimeSlot: z.enum(["all", "morning", "evening"]).default("all"),
   attendingSunday: z.boolean().default(true),
-  expectations: z.string().trim().min(15, "EXPECTATIONS_MIN").max(1500),
+  expectations: z.string().trim().max(1500).optional().default(""),
   referralSource: z.string().trim().min(2, "REFERRAL_REQUIRED").max(100),
   locale: z.enum(["fr", "en"]).default("fr"),
   acceptedCommitment: z.literal(true, {

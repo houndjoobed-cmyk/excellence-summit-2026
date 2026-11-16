@@ -430,6 +430,11 @@ function DashboardView() {
   const domainMap = new Map(DOMAINS.map((d) => [d.value as string, d]));
   const speakerMap = new Map(GUEST_SPEAKERS.map((s) => [s.id, s]));
 
+  function formatSpeakerChoice(id: string): string {
+    const sp = speakerMap.get(id);
+    return sp ? `${sp.masterclassFocus[locale]} (${sp.name})` : id;
+  }
+
   return (
     <div className="min-h-screen bg-ivory text-ink">
       <TitleSync pageKey="dashboardTitle" />
@@ -461,24 +466,22 @@ function DashboardView() {
             {liveState ? (
               <span
                 title={liveState.errorMessage || "Neon Realtime WebSocket"}
-                className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold ${
-                  liveState.status === "live"
+                className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] font-semibold ${liveState.status === "live"
                     ? "border-emerald-400/40 bg-emerald-400/15 text-emerald-200"
                     : liveState.status === "error" ||
-                        liveState.status === "closed"
+                      liveState.status === "closed"
                       ? "border-red-400/40 bg-crimson-500/20 text-red-200"
                       : "border-gold-400/40 bg-gold-400/15 text-gold-200"
-                }`}
+                  }`}
               >
                 <span
-                  className={`rounded-full size-2 ${
-                    liveState.status === "live"
+                  className={`rounded-full size-2 ${liveState.status === "live"
                       ? "animate-pulse bg-emerald-400"
                       : liveState.status === "error" ||
-                          liveState.status === "closed"
+                        liveState.status === "closed"
                         ? "bg-red-400"
                         : "animate-pulse bg-gold-300"
-                  }`}
+                    }`}
                 />
                 <span>
                   {liveState.status === "live"
@@ -486,7 +489,7 @@ function DashboardView() {
                       ? "Neon Live"
                       : "Temps réel"
                     : liveState.status === "error" ||
-                        liveState.status === "closed"
+                      liveState.status === "closed"
                       ? isEn
                         ? "Live offline"
                         : "Hors ligne"
@@ -1026,7 +1029,9 @@ function DashboardView() {
                 </option>
                 {GUEST_SPEAKERS.map((sp) => (
                   <option key={sp.id} value={sp.id}>
-                    {sp.name}
+                    {sp.hasMasterclass
+                      ? `${sp.name} — ${sp.masterclassFocus[locale]}`
+                      : sp.name}
                   </option>
                 ))}
               </select>
@@ -1106,6 +1111,13 @@ function DashboardView() {
                           <p className="text-ink-muted">
                             {domainMap.get(item.domain)?.[locale] || item.domain}
                           </p>
+                          {item.preferredSpeakers.length > 0 ? (
+                            <p className="mt-1 text-[11px] font-medium text-royal-900">
+                              {item.preferredSpeakers
+                                .map((id) => formatSpeakerChoice(id))
+                                .join(" · ")}
+                            </p>
+                          ) : null}
                         </td>
                         <td className="py-3 pr-3 font-mono-code text-xs font-bold text-royal-900 tabular-nums">
                           {item.checkIns.length} / {CONVENTION_SESSIONS.length}
@@ -1320,12 +1332,12 @@ function DashboardView() {
 
               <div>
                 <dt className="text-xs font-semibold text-ink-muted">
-                  {isEn ? "Preferred Speakers" : "Orateurs sélectionnés"}
+                  {isEn ? "Selected Masterclasses" : "Masterclasses choisies"}
                 </dt>
                 <dd className="mt-1 flex flex-wrap gap-1.5">
                   {selectedAttendee.preferredSpeakers.length === 0 ? (
                     <span className="text-xs text-ink-muted">
-                      {isEn ? "All 4 speakers" : "Les 4 orateurs"}
+                      {isEn ? "None selected" : "Aucune sélection"}
                     </span>
                   ) : (
                     selectedAttendee.preferredSpeakers.map((id) => (
@@ -1333,7 +1345,7 @@ function DashboardView() {
                         key={id}
                         className="rounded-full bg-royal-900/6 px-2.5 py-0.5 text-xs font-semibold text-royal-900"
                       >
-                        {speakerMap.get(id)?.name || id}
+                        {formatSpeakerChoice(id)}
                       </span>
                     ))
                   )}
@@ -1345,7 +1357,11 @@ function DashboardView() {
                   {isEn ? "Expectations" : "Attentes exprimées"}
                 </dt>
                 <dd className="mt-1 rounded-xl bg-ivory p-3 text-ink text-xs/relaxed">
-                  {selectedAttendee.expectations}
+                  {selectedAttendee.expectations.trim()
+                    ? selectedAttendee.expectations
+                    : isEn
+                      ? "No expectations provided"
+                      : "Aucune attente renseignée"}
                 </dd>
               </div>
             </dl>

@@ -156,6 +156,7 @@ export interface Dictionary {
       domain: string;
       roleTitle: string;
       expectations: string;
+      masterclassRequired: string;
       referralSource: string;
       commitments: string;
       dbNotConfigured: string;
@@ -349,8 +350,9 @@ const FR_DICT: Dictionary = {
       rolePlaceholder: "Ex. Entrepreneur, Pasteur, Cadre, Étudiant...",
       organization: "Église / Entreprise / Organisation (optionnel)",
       organizationPlaceholder: "Nom de votre structure",
-      preferredSpeakers: "Orateurs que vous avez le plus hâte d'écouter (optionnel)",
-      preferredSpeakersHint: "Votre pass reste valable pour les 4 orateurs sans restriction.",
+      preferredSpeakers: "Choisissez votre / vos Masterclass(es)",
+      preferredSpeakersHint:
+        "Sélectionnez au moins une masterclass parmi les 3 thèmes proposés (choix multiple possible).",
       preferredTimeSlot: "Disponibilité principale pour les sessions Mer–Ven",
       timeSlots: {
         all: "Matin & Soir (Programme complet)",
@@ -359,7 +361,7 @@ const FR_DICT: Dictionary = {
       },
       attendingSunday:
         "Je prévois d'assister au Culte Spécial du dimanche 06 déc. au Majestic de Cadjehoun (dès 10h00)",
-      expectations: "Vos attentes pour ces masterclasses",
+      expectations: "Ce que vous attendez de cette masterclass (facultatif)",
       expectationsPlaceholder:
         "Partagez en quelques lignes ce que vous souhaitez recevoir et bâtir durant la convention...",
       expectationsMinHint: "Minimum 15 caractères",
@@ -411,6 +413,7 @@ const FR_DICT: Dictionary = {
       domain: "Veuillez choisir un domaine d'activité.",
       roleTitle: "Veuillez préciser votre fonction ou rôle.",
       expectations: "Veuillez décrire vos attentes (15 caractères minimum).",
+      masterclassRequired: "Veuillez sélectionner au moins une masterclass.",
       referralSource: "Veuillez indiquer comment vous avez connu l'événement.",
       commitments: "Veuillez cocher les deux cases de confirmation.",
       dbNotConfigured:
@@ -609,8 +612,9 @@ const EN_DICT: Dictionary = {
       rolePlaceholder: "e.g., Entrepreneur, Pastor, Executive, Student...",
       organization: "Church / Company / Organization (optional)",
       organizationPlaceholder: "Organization name",
-      preferredSpeakers: "Speakers you are most eager to attend (optional)",
-      preferredSpeakersHint: "Your pass remains valid for all 4 speakers with no restriction.",
+      preferredSpeakers: "Choose your Masterclass(es)",
+      preferredSpeakersHint:
+        "Select at least one masterclass from the 3 tracks below (multiple selection allowed).",
       preferredTimeSlot: "Main availability for Wed–Fri sessions",
       timeSlots: {
         all: "Morning & Evening (Full programme)",
@@ -619,7 +623,7 @@ const EN_DICT: Dictionary = {
       },
       attendingSunday:
         "I plan to attend the Special Service on Sunday Dec 06 at Majestic de Cadjehoun (from 10:00)",
-      expectations: "Your expectations for the masterclasses",
+      expectations: "What you expect from this masterclass (optional)",
       expectationsPlaceholder:
         "Briefly share what you hope to learn, build, or receive during the convention...",
       expectationsMinHint: "Minimum 15 characters",
@@ -671,6 +675,7 @@ const EN_DICT: Dictionary = {
       domain: "Please select your field of activity.",
       roleTitle: "Please enter your current role.",
       expectations: "Please describe your expectations (min. 15 characters).",
+      masterclassRequired: "Please select at least one masterclass.",
       referralSource: "Please tell us how you heard about the event.",
       commitments: "Please check both confirmation boxes.",
       dbNotConfigured:

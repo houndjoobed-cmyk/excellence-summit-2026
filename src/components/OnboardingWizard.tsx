@@ -17,7 +17,7 @@ import { useState } from "react";
 import { BadgePassCard, type BadgePassData } from "@/components/BadgePassCard";
 import { useLocale } from "@/components/LocaleProvider";
 import { DOMAINS, REFERRAL_SOURCES } from "@/data/event";
-import { GUEST_SPEAKERS } from "@/data/speakers";
+import { MASTERCLASS_SPEAKERS } from "@/data/speakers";
 
 const COUNTRY_DIAL_CODES = [
   { code: "+229", label: "🇧🇯 +229 (Bénin)" },
@@ -139,8 +139,8 @@ export function OnboardingWizard() {
       setFieldError(t.onboarding.errors.roleTitle);
       return false;
     }
-    if (form.expectations.trim().length < 15) {
-      setFieldError(t.onboarding.errors.expectations);
+    if (form.preferredSpeakers.length === 0) {
+      setFieldError(t.onboarding.errors.masterclassRequired);
       return false;
     }
     if (!form.referralSource) {
@@ -273,8 +273,6 @@ export function OnboardingWizard() {
     );
   }
 
-  const expectationsLen = form.expectations.trim().length;
-
   return (
     <div className="mx-auto max-w-3xl overflow-hidden rounded-3xl border border-royal-900/12 bg-white shadow-[0_24px_64px_rgba(4,18,71,0.12)]">
       {/* Top golden accent line */}
@@ -290,29 +288,26 @@ export function OnboardingWizard() {
             return (
               <li
                 key={label}
-                className={`flex items-center gap-2 rounded-2xl border px-2.5 py-2 transition-colors sm:px-3.5 ${
-                  active
+                className={`flex items-center gap-2 rounded-2xl border px-2.5 py-2 transition-colors sm:px-3.5 ${active
                     ? "min-w-0 flex-1 border-royal-900 bg-royal-900 text-white shadow-sm"
                     : done
                       ? "shrink-0 justify-center border-emerald-200 bg-emerald-50 text-emerald-900 sm:min-w-0 sm:flex-1 sm:justify-start"
                       : "shrink-0 justify-center border-slate-200 bg-white text-ink-muted sm:min-w-0 sm:flex-1 sm:justify-start"
-                }`}
+                  }`}
               >
                 <span
-                  className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold tabular-nums ${
-                    active
+                  className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold tabular-nums ${active
                       ? "bg-gold-400 text-royal-950"
                       : done
                         ? "bg-emerald-600 text-white"
                         : "bg-slate-100 text-ink-muted"
-                  }`}
+                    }`}
                 >
                   {done ? <Check className="h-3.5 w-3.5" /> : num}
                 </span>
                 <span
-                  className={`truncate text-xs font-semibold ${
-                    active ? "inline" : "hidden sm:inline"
-                  }`}
+                  className={`truncate text-xs font-semibold ${active ? "inline" : "hidden sm:inline"
+                    }`}
                 >
                   {label}
                 </span>
@@ -551,13 +546,13 @@ export function OnboardingWizard() {
 
               <div>
                 <p className="text-xs font-semibold text-ink">
-                  {t.onboarding.fields.preferredSpeakers}
+                  {t.onboarding.fields.preferredSpeakers} *
                 </p>
                 <p className="mt-0.5 text-xs text-ink-muted">
                   {t.onboarding.fields.preferredSpeakersHint}
                 </p>
-                <div className="mt-2.5 grid gap-2 sm:grid-cols-2">
-                  {GUEST_SPEAKERS.map((sp) => {
+                <div className="mt-2.5 grid gap-2.5">
+                  {MASTERCLASS_SPEAKERS.map((sp) => {
                     const selected = form.preferredSpeakers.includes(sp.id);
                     return (
                       <button
@@ -565,11 +560,10 @@ export function OnboardingWizard() {
                         type="button"
                         onClick={() => toggleSpeaker(sp.id)}
                         aria-pressed={selected}
-                        className={`flex items-center gap-3 rounded-xl border p-2.5 text-left transition-colors active:scale-[0.98] ${
-                          selected
+                        className={`flex items-center gap-3 rounded-xl border p-3 text-left transition-colors active:scale-[0.98] ${selected
                             ? "border-royal-900 bg-royal-900/6 ring-1 ring-royal-900"
                             : "border-slate-200 bg-white hover:border-slate-300"
-                        }`}
+                          }`}
                       >
                         <Image
                           src={sp.image}
@@ -579,19 +573,19 @@ export function OnboardingWizard() {
                           className="h-10 w-10 shrink-0 rounded-full object-cover object-top ring-1 ring-black/10"
                         />
                         <div className="min-w-0 flex-1">
-                          <p className="truncate text-xs font-bold text-ink">
-                            {sp.name}
+                          <p className="text-xs font-bold text-ink sm:text-sm">
+                            {sp.masterclassFocus[locale]}
                           </p>
-                          <p className="truncate text-[11px] text-ink-muted">
-                            {sp.roleTitle[locale]} · {sp.flagEmoji} {sp.country[locale]}
+                          <p className="mt-0.5 truncate text-[11px] text-ink-muted">
+                            {sp.name} · {sp.roleTitle[locale]} {sp.flagEmoji}{" "}
+                            {sp.country[locale]}
                           </p>
                         </div>
                         <span
-                          className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${
-                            selected
+                          className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${selected
                               ? "bg-royal-900 text-gold-300"
                               : "border border-slate-300 bg-white"
-                          }`}
+                            }`}
                         >
                           {selected ? <Check className="h-3 w-3" /> : null}
                         </span>
@@ -640,27 +634,15 @@ export function OnboardingWizard() {
               </label>
 
               <div>
-                <div className="mb-1.5 flex items-center justify-between">
-                  <label
-                    htmlFor="reg-expectations"
-                    className="text-xs font-semibold text-ink"
-                  >
-                    {t.onboarding.fields.expectations} *
-                  </label>
-                  <span
-                    className={`text-[11px] font-semibold tabular-nums ${
-                      expectationsLen >= 15
-                        ? "text-emerald-700"
-                        : "text-ink-muted"
-                    }`}
-                  >
-                    {expectationsLen} / 15 min.
-                  </span>
-                </div>
+                <label
+                  htmlFor="reg-expectations"
+                  className="mb-1.5 block text-xs font-semibold text-ink"
+                >
+                  {t.onboarding.fields.expectations}
+                </label>
                 <textarea
                   id="reg-expectations"
                   rows={3}
-                  required
                   placeholder={t.onboarding.fields.expectationsPlaceholder}
                   value={form.expectations}
                   onChange={(e) => update("expectations", e.target.value)}
@@ -744,6 +726,24 @@ export function OnboardingWizard() {
                     <dd className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-royal-800">
                       <Sparkles className="h-3.5 w-3.5 text-gold-600" />
                       <span>{t.onboarding.success.accessValue}</span>
+                    </dd>
+                  </div>
+
+                  <div className="sm:col-span-2">
+                    <dt className="text-xs text-ink-muted">
+                      {t.onboarding.summary.focusLabel}
+                    </dt>
+                    <dd className="mt-1.5 flex flex-wrap gap-1.5">
+                      {MASTERCLASS_SPEAKERS.filter((sp) =>
+                        form.preferredSpeakers.includes(sp.id),
+                      ).map((sp) => (
+                        <span
+                          key={sp.id}
+                          className="rounded-full bg-royal-900/8 px-3 py-1 text-xs font-semibold text-royal-900"
+                        >
+                          {sp.masterclassFocus[locale]} · {sp.name}
+                        </span>
+                      ))}
                     </dd>
                   </div>
                 </dl>

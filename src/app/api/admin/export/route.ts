@@ -2,6 +2,7 @@ import { desc } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { getDb, isDatabaseConfigured } from "@/db";
 import { checkIns, registrations } from "@/db/schema";
+import { GUEST_SPEAKERS } from "@/data/speakers";
 import { getAdminSession } from "@/lib/auth";
 
 function csvCell(value: string | number | boolean | null | undefined): string {
@@ -60,8 +61,14 @@ export async function GET() {
     "Date_Inscription",
   ];
 
+  const speakerMap = new Map(GUEST_SPEAKERS.map((s) => [s.id, s]));
+
   const rows = allRegistrations.map((r) => {
     const sessions = checkInsMap.get(r.id) || [];
+    const preferredTracks = (r.preferredSpeakers || []).map((id) => {
+      const sp = speakerMap.get(id);
+      return sp ? `${sp.masterclassFocus.fr} (${sp.name})` : id;
+    });
     return [
       r.badgeCode,
       r.firstName,
@@ -73,7 +80,7 @@ export async function GET() {
       r.domain,
       r.roleTitle,
       r.organization || "",
-      (r.preferredSpeakers || []).join(" | "),
+      preferredTracks.join(" | "),
       r.preferredTimeSlot,
       r.attendingSunday ? "Oui" : "Non",
       r.status,
