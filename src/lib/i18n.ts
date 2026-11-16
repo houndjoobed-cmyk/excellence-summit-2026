@@ -252,7 +252,7 @@ const FR_DICT: Dictionary = {
     ctaSecondary: "Découvrir les 4 orateurs",
     ctaBadge: "Retrouver mon badge",
     datePill: "01 – 06 Décembre 2026",
-    venuePill: "Cité d'Excellence · Abomey-Calavi & Majestic Cadjehoun",
+    venuePill: "Cité d'Excellence · Abomey-Calavi & Salle Gratitude · Arconville",
     scrollCue: "Découvrir le programme et les masterclasses",
   },
   facts: {
@@ -261,7 +261,7 @@ const FR_DICT: Dictionary = {
     scheduleValue: "09h–12h · 19h–21h",
     scheduleLabel: "Masterclasses & Plénières (Mer–Ven)",
     venuesValue: "2 Lieux",
-    venuesLabel: "Cité d'Excellence & Majestic Cadjehoun",
+    venuesLabel: "Cité d'Excellence & Salle Gratitude (Arconville)",
     accessValue: "Pass QR Unique",
     accessLabel: "Accès gratuit · Confirmation immédiate",
   },
@@ -360,7 +360,7 @@ const FR_DICT: Dictionary = {
         evening: "Sessions du soir (19h – 21h)",
       },
       attendingSunday:
-        "Je prévois d'assister au Culte Spécial du dimanche 06 déc. au Majestic de Cadjehoun (dès 10h00)",
+        "Je prévois d'assister au Culte Spécial du dimanche 06 déc. à la Salle des fêtes Gratitude à Arconville (dès 10h00)",
       expectations: "Ce que vous attendez de cette masterclass (facultatif)",
       expectationsPlaceholder:
         "Partagez en quelques lignes ce que vous souhaitez recevoir et bâtir durant la convention...",
@@ -399,7 +399,7 @@ const FR_DICT: Dictionary = {
       accessLabel: "Accès inclus",
       accessValue: "Pass Global · 4 Orateurs · 01–06 Déc. 2026",
       keepNotice:
-        "Présentez ce QR code (ou votre numéro ES26) à l'entrée de chaque session à la Cité d'Excellence et au Majestic de Cadjehoun.",
+        "Présentez ce QR code (ou votre numéro ES26) à l'entrée de chaque session à la Cité d'Excellence et à la Salle des fêtes Gratitude à Arconville.",
     },
     errors: {
       generic: "Une erreur est survenue. Veuillez vérifier vos informations.",
@@ -443,7 +443,7 @@ const FR_DICT: Dictionary = {
     passHolder: "Participant",
     passRef: "Référence",
     passDates: "01 – 06 Déc. 2026",
-    passLocation: "Cité d'Excellence & Majestic Cadjehoun",
+    passLocation: "Cité d'Excellence & Salle Gratitude (Arconville)",
     downloadPng: "Télécharger en PNG",
     printPass: "Imprimer",
     savePreviewTitle: "Enregistrer votre badge",
@@ -514,7 +514,7 @@ const EN_DICT: Dictionary = {
     ctaSecondary: "Meet the 4 Speakers",
     ctaBadge: "Find my badge",
     datePill: "December 01 – 06, 2026",
-    venuePill: "Cité d'Excellence · Abomey-Calavi & Majestic Cadjehoun",
+    venuePill: "Cité d'Excellence · Abomey-Calavi & Salle Gratitude · Arconville",
     scrollCue: "Explore the schedule and masterclasses",
   },
   facts: {
@@ -523,7 +523,7 @@ const EN_DICT: Dictionary = {
     scheduleValue: "09:00–12:00 · 19:00–21:00",
     scheduleLabel: "Masterclasses & Plenaries (Wed–Fri)",
     venuesValue: "2 Venues",
-    venuesLabel: "Cité d'Excellence & Majestic Cadjehoun",
+    venuesLabel: "Cité d'Excellence & Salle Gratitude (Arconville)",
     accessValue: "Single QR Pass",
     accessLabel: "Free access · Instant confirmation",
   },
@@ -622,7 +622,7 @@ const EN_DICT: Dictionary = {
         evening: "Evening sessions (19:00 – 21:00)",
       },
       attendingSunday:
-        "I plan to attend the Special Service on Sunday Dec 06 at Majestic de Cadjehoun (from 10:00)",
+        "I plan to attend the Special Service on Sunday Dec 06 at Salle des fêtes Gratitude in Arconville (from 10:00)",
       expectations: "What you expect from this masterclass (optional)",
       expectationsPlaceholder:
         "Briefly share what you hope to learn, build, or receive during the convention...",
@@ -661,7 +661,7 @@ const EN_DICT: Dictionary = {
       accessLabel: "Included Access",
       accessValue: "All-Access Pass · 4 Speakers · Dec 01–06, 2026",
       keepNotice:
-        "Present this QR code (or your ES26 reference) at the entrance for each session at Cité d'Excellence and Majestic de Cadjehoun.",
+        "Present this QR code (or your ES26 reference) at the entrance for each session at Cité d'Excellence and Salle des fêtes Gratitude in Arconville.",
     },
     errors: {
       generic: "Something went wrong. Please check your details and try again.",
@@ -705,7 +705,7 @@ const EN_DICT: Dictionary = {
     passHolder: "Attendee",
     passRef: "Reference",
     passDates: "Dec 01 – 06, 2026",
-    passLocation: "Cité d'Excellence & Majestic Cadjehoun",
+    passLocation: "Cité d'Excellence & Salle Gratitude (Arconville)",
     downloadPng: "Download PNG",
     printPass: "Print",
     savePreviewTitle: "Save Your Pass",

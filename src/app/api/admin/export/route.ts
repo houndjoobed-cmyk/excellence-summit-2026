@@ -53,7 +53,7 @@ export async function GET() {
     "Organisation",
     "Orateurs_Preferes",
     "Creneau_Prefere",
-    "Culte_Majestic_Dimanche",
+    "Culte_Gratitude_Dimanche",
     "Statut",
     "Nb_Pointages",
     "Sessions_Pointees",

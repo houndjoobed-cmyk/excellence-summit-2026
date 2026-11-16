@@ -46,8 +46,8 @@ export function LandingSections() {
     {
       title:
         locale === "fr"
-          ? "Cité d'Excellence & Majestic"
-          : "Cité d'Excellence & Majestic",
+          ? "Cité d'Excellence & Gratitude"
+          : "Cité d'Excellence & Gratitude",
       description: t.hero.venuePill,
     },
     {

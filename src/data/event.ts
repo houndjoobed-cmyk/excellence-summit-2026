@@ -49,10 +49,10 @@ export const EVENT_INFO = {
       },
     },
     sunday: {
-      name: "Majestic de Cadjehoun",
+      name: "Salle des fêtes Gratitude",
       address: {
-        fr: "Majestic de Cadjehoun, Cotonou",
-        en: "Majestic de Cadjehoun, Cotonou",
+        fr: "Salle des fêtes Gratitude, Arconville",
+        en: "Salle des fêtes Gratitude, Arconville",
       },
     },
   },
@@ -155,13 +155,13 @@ export const CONVENTION_SESSIONS: ConventionSession[] = [
   },
   {
     key: "day6-majestic",
-    dayShort: { fr: "Dim. 06 · Majestic", en: "Sun Dec 06 · Majestic" },
+    dayShort: { fr: "Dim. 06 · Gratitude", en: "Sun Dec 06 · Gratitude" },
     dateLabel: { fr: "Dimanche 06 déc. 2026", en: "Sunday, Dec 06, 2026" },
     timeLabel: "Dès 10h00",
     title: { fr: "Culte Spécial de clôture", en: "Closing Special Service" },
     venue: {
-      fr: "Majestic de Cadjehoun · Cotonou",
-      en: "Majestic de Cadjehoun · Cotonou",
+      fr: "Salle des fêtes Gratitude · Arconville",
+      en: "Salle des fêtes Gratitude · Arconville",
     },
     isSpecial: true,
   },
@@ -233,13 +233,13 @@ export const PROGRAMME_BLOCKS: ProgrammeBlock[] = [
     id: "culte-special",
     dateBadge: { fr: "DIM. 06 DÉC.", en: "SUN DEC 06" },
     dayRange: { fr: "Grande clôture", en: "Grand Finale" },
-    title: { fr: "Culte Spécial au Majestic", en: "Special Service at Majestic" },
+    title: { fr: "Culte Spécial à la Salle Gratitude", en: "Special Service at Salle Gratitude" },
     slots: [
       {
         time: "Dès 10h00",
         label: {
-          fr: "Grand rassemblement de clôture au Majestic de Cadjehoun",
-          en: "Grand closing gathering at Majestic de Cadjehoun",
+          fr: "Grand rassemblement de clôture à la Salle des fêtes Gratitude à Arconville",
+          en: "Grand closing gathering at Salle des fêtes Gratitude in Arconville",
         },
       },
     ],

@@ -304,7 +304,7 @@ function buildBadgeEmailHtml(params: BuildBadgeHtmlParams): string {
                     </p>
                     <img src="${safeQrSrc}" alt="QR Code ${safeCode}" width="180" height="180" style="display:block;margin:0 auto;border-radius:10px;background:#ffffff;padding:8px;" />
                     <p style="margin:16px 0 0;font-size:12px;color:#dbe4ff;">
-                      ${isEn ? "Dec 01 – 06, 2026 · Cité d'Excellence & Majestic Cadjehoun" : "01 – 06 Déc. 2026 · Cité d'Excellence & Majestic Cadjehoun"}
+                      ${isEn ? "Dec 01 – 06, 2026 · Cité d'Excellence & Salle Gratitude (Arconville)" : "01 – 06 Déc. 2026 · Cité d'Excellence & Salle Gratitude (Arconville)"}
                     </p>
                   </td>
                 </tr>

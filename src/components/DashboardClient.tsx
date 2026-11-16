@@ -640,7 +640,7 @@ function DashboardView() {
           </div>
           <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-2xs">
             <p className="text-[11px] font-bold uppercase tracking-wider text-crimson-600">
-              Majestic (Dim. 06)
+              Gratitude (Dim. 06)
             </p>
             <p className="mt-1 font-display text-3xl font-bold text-crimson-600 tabular-nums">
               {stats?.sundayCount ?? 0}
