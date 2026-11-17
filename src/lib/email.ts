@@ -276,7 +276,7 @@ function buildBadgeEmailHtml(params: BuildBadgeHtmlParams): string {
                 Excellence Summit 2026
               </h1>
               <p style="margin:8px 0 0;font-size:14px;color:#dbe4ff;">
-                ${isEn ? "1st Convention · Masterclasses Pass" : "1re Convention · Pass Masterclasses"}
+                ${isEn ? "1st Convention · Masterclass Pass" : "1re Convention · Pass Masterclass"}
               </p>
             </td>
           </tr>
@@ -288,8 +288,8 @@ function buildBadgeEmailHtml(params: BuildBadgeHtmlParams): string {
               <p style="margin:0 0 20px;font-size:15px;line-height:1.6;color:#394366;">
                 ${
                   isEn
-                    ? "Your registration for the Excellence Summit 2026 Masterclasses is confirmed. Present the QR code or reference number below at the entrance."
-                    : "Votre inscription aux Masterclasses d'Excellence Summit 2026 est confirmée. Présentez ce QR code ou votre numéro de référence à l'accueil."
+                    ? "Your registration for the Excellence Summit 2026 Masterclass is confirmed. Present the QR code or reference number below at the entrance."
+                    : "Votre inscription à la Masterclass d'Excellence Summit 2026 est confirmée. Présentez ce QR code ou votre numéro de référence à l'accueil."
                 }
               </p>
 

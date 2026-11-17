@@ -456,7 +456,7 @@ function DashboardView() {
               </p>
               <p className="text-[11px] text-white/65">
                 {isEn
-                  ? "Masterclasses Tracking & QR Verification"
+                  ? "Masterclass Tracking & QR Verification"
                   : "Suivi des inscriptions & Vérification QR"}
               </p>
             </div>
@@ -1332,7 +1332,7 @@ function DashboardView() {
 
               <div>
                 <dt className="text-xs font-semibold text-ink-muted">
-                  {isEn ? "Selected Masterclasses" : "Masterclasses choisies"}
+                  {isEn ? "Selected Masterclass" : "Masterclass sélectionnées"}
                 </dt>
                 <dd className="mt-1 flex flex-wrap gap-1.5">
                   {selectedAttendee.preferredSpeakers.length === 0 ? (

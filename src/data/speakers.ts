@@ -8,6 +8,10 @@ export interface SpeakerProfile {
   image: string;
   isCutout?: boolean;
   hasMasterclass?: boolean;
+  masterclassSchedule?: {
+    dayBadge: { fr: string; en: string };
+    dateTime: { fr: string; en: string };
+  };
   masterclassFocus: { fr: string; en: string };
   bio: { fr: string[]; en: string[] };
 }
@@ -36,11 +40,11 @@ export const GUEST_SPEAKERS: SpeakerProfile[] = [
     bio: {
       fr: [
         "Évangéliste basé en France, Pierre Gospiel exerce un ministère dynamique axé sur la proclamation de l'Évangile, le réveil spirituel et la formation d'une nouvelle génération de témoins audacieux.",
-        "Au cours des masterclasses d'Excellence Summit, il partagera des clés pratiques pour opérer avec puissance, clarté et fidélité dans les sphères publiques contemporaines.",
+        "Au cours de la masterclass d'Excellence Summit, il partagera des clés pratiques pour opérer avec puissance, clarté et fidélité dans les sphères publiques contemporaines.",
       ],
       en: [
         "An evangelist based in France, Pierre Gospiel leads a vibrant ministry centered on preaching the Gospel, spiritual awakening, and equipping a new generation of bold witnesses.",
-        "During the Excellence Summit masterclasses, he will share practical keys to operating with spiritual power, clarity, and faithfulness in contemporary public life.",
+        "During the Excellence Summit masterclass, he will share practical keys to operating with spiritual power, clarity, and faithfulness in contemporary public life.",
       ],
     },
   },
@@ -56,6 +60,16 @@ export const GUEST_SPEAKERS: SpeakerProfile[] = [
     flagEmoji: "🇬🇦",
     image: "/images/speakers/mike-jocktane.webp",
     hasMasterclass: true,
+    masterclassSchedule: {
+      dayBadge: {
+        fr: "Mercredi 02 déc. · Dès 09h00",
+        en: "Wednesday Dec 02 · From 09:00",
+      },
+      dateTime: {
+        fr: "Mercredi 02 déc. 2026 · Matinée (dès 09h00)",
+        en: "Wednesday, Dec 02, 2026 · Morning (from 09:00)",
+      },
+    },
     masterclassFocus: {
       fr: "Révéler les talents, propulser les entrepreneurs",
       en: "Revealing Talents, Propelling Entrepreneurs",
@@ -83,6 +97,16 @@ export const GUEST_SPEAKERS: SpeakerProfile[] = [
     flagEmoji: "🇨🇮",
     image: "/images/speakers/dieunedort-kamdem.webp",
     hasMasterclass: true,
+    masterclassSchedule: {
+      dayBadge: {
+        fr: "Jeudi 03 déc. · Dès 09h00",
+        en: "Thursday Dec 03 · From 09:00",
+      },
+      dateTime: {
+        fr: "Jeudi 03 déc. 2026 · Matinée (dès 09h00)",
+        en: "Thursday, Dec 03, 2026 · Morning (from 09:00)",
+      },
+    },
     masterclassFocus: {
       fr: "Commencer l'entrepreneuriat avec 0 franc",
       en: "Starting Entrepreneurship with 0 Francs",
@@ -110,6 +134,16 @@ export const GUEST_SPEAKERS: SpeakerProfile[] = [
     flagEmoji: "🇹🇬",
     image: "/images/speakers/mawuena-drah.webp",
     hasMasterclass: true,
+    masterclassSchedule: {
+      dayBadge: {
+        fr: "Vendredi 04 déc. · Dès 09h00",
+        en: "Friday Dec 04 · From 09:00",
+      },
+      dateTime: {
+        fr: "Vendredi 04 déc. 2026 · Matinée (dès 09h00)",
+        en: "Friday, Dec 04, 2026 · Morning (from 09:00)",
+      },
+    },
     masterclassFocus: {
       fr: "Ministère prophétique",
       en: "Prophetic Ministry",

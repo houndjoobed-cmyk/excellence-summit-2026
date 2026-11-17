@@ -106,6 +106,14 @@ export function OnboardingWizard() {
   }
 
   function validateStep1(): boolean {
+    if (form.preferredSpeakers.length === 0) {
+      setFieldError(t.onboarding.errors.masterclassRequired);
+      return false;
+    }
+    return true;
+  }
+
+  function validateStep2(): boolean {
     if (form.firstName.trim().length < 2) {
       setFieldError(t.onboarding.errors.firstName);
       return false;
@@ -127,20 +135,12 @@ export function OnboardingWizard() {
       setFieldError(t.onboarding.errors.city);
       return false;
     }
-    return true;
-  }
-
-  function validateStep2(): boolean {
     if (!form.domain) {
       setFieldError(t.onboarding.errors.domain);
       return false;
     }
     if (form.roleTitle.trim().length < 2) {
       setFieldError(t.onboarding.errors.roleTitle);
-      return false;
-    }
-    if (form.preferredSpeakers.length === 0) {
-      setFieldError(t.onboarding.errors.masterclassRequired);
       return false;
     }
     if (!form.referralSource) {
@@ -337,6 +337,84 @@ export function OnboardingWizard() {
                 </p>
               </div>
 
+              <div>
+                <p className="text-xs font-semibold text-ink">
+                  {t.onboarding.fields.preferredSpeakers} *
+                </p>
+                <p className="mt-0.5 text-xs text-ink-muted">
+                  {t.onboarding.fields.preferredSpeakersHint}
+                </p>
+                <div className="mt-3 grid gap-3">
+                  {MASTERCLASS_SPEAKERS.map((sp) => {
+                    const selected = form.preferredSpeakers.includes(sp.id);
+                    return (
+                      <button
+                        key={sp.id}
+                        type="button"
+                        onClick={() => toggleSpeaker(sp.id)}
+                        aria-pressed={selected}
+                        className={`flex items-center gap-3.5 rounded-2xl border p-3.5 text-left transition-colors active:scale-[0.99] sm:p-4 ${
+                          selected
+                            ? "border-royal-900 bg-royal-900/6 ring-1 ring-royal-900"
+                            : "border-slate-200 bg-white hover:border-slate-300"
+                        }`}
+                      >
+                        <Image
+                          src={sp.image}
+                          alt={sp.name}
+                          width={48}
+                          height={48}
+                          className="h-12 w-12 shrink-0 rounded-full object-cover object-top ring-1 ring-black/10"
+                        />
+                        <div className="min-w-0 flex-1">
+                          {sp.masterclassSchedule ? (
+                            <span className="mb-1 inline-block rounded-full bg-gold-400/20 px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-royal-900">
+                              {sp.masterclassSchedule.dayBadge[locale]}
+                            </span>
+                          ) : null}
+                          <p className="text-sm font-bold text-ink sm:text-base">
+                            {sp.masterclassFocus[locale]}
+                          </p>
+                          <p className="mt-0.5 truncate text-xs text-ink-muted">
+                            {sp.name} · {sp.roleTitle[locale]} {sp.flagEmoji}{" "}
+                            {sp.country[locale]}
+                          </p>
+                        </div>
+                        <span
+                          className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${
+                            selected
+                              ? "bg-royal-900 text-gold-300"
+                              : "border border-slate-300 bg-white"
+                          }`}
+                        >
+                          {selected ? <Check className="h-3.5 w-3.5" /> : null}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </motion.div>
+          ) : null}
+
+          {step === 2 ? (
+            <motion.div
+              key="step-2"
+              initial={{ opacity: 0, x: 14 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -14 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className="space-y-5"
+            >
+              <div>
+                <h3 className="font-display text-2xl font-bold text-royal-900 sm:text-3xl">
+                  {t.onboarding.step2Title}
+                </h3>
+                <p className="mt-1 text-sm text-ink-muted">
+                  {t.onboarding.step2Desc}
+                </p>
+              </div>
+
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label
@@ -461,26 +539,6 @@ export function OnboardingWizard() {
                   />
                 </div>
               </div>
-            </motion.div>
-          ) : null}
-
-          {step === 2 ? (
-            <motion.div
-              key="step-2"
-              initial={{ opacity: 0, x: 14 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -14 }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              className="space-y-5"
-            >
-              <div>
-                <h3 className="font-display text-2xl font-bold text-royal-900 sm:text-3xl">
-                  {t.onboarding.step2Title}
-                </h3>
-                <p className="mt-1 text-sm text-ink-muted">
-                  {t.onboarding.step2Desc}
-                </p>
-              </div>
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
@@ -542,57 +600,6 @@ export function OnboardingWizard() {
                   onChange={(e) => update("organization", e.target.value)}
                   className="w-full rounded-xl border border-slate-200 px-4 py-2.5 text-sm outline-none focus:border-royal-800 focus:ring-2 focus:ring-royal-800/15"
                 />
-              </div>
-
-              <div>
-                <p className="text-xs font-semibold text-ink">
-                  {t.onboarding.fields.preferredSpeakers} *
-                </p>
-                <p className="mt-0.5 text-xs text-ink-muted">
-                  {t.onboarding.fields.preferredSpeakersHint}
-                </p>
-                <div className="mt-2.5 grid gap-2.5">
-                  {MASTERCLASS_SPEAKERS.map((sp) => {
-                    const selected = form.preferredSpeakers.includes(sp.id);
-                    return (
-                      <button
-                        key={sp.id}
-                        type="button"
-                        onClick={() => toggleSpeaker(sp.id)}
-                        aria-pressed={selected}
-                        className={`flex items-center gap-3 rounded-xl border p-3 text-left transition-colors active:scale-[0.98] ${selected
-                            ? "border-royal-900 bg-royal-900/6 ring-1 ring-royal-900"
-                            : "border-slate-200 bg-white hover:border-slate-300"
-                          }`}
-                      >
-                        <Image
-                          src={sp.image}
-                          alt={sp.name}
-                          width={40}
-                          height={40}
-                          className="h-10 w-10 shrink-0 rounded-full object-cover object-top ring-1 ring-black/10"
-                        />
-                        <div className="min-w-0 flex-1">
-                          <p className="text-xs font-bold text-ink sm:text-sm">
-                            {sp.masterclassFocus[locale]}
-                          </p>
-                          <p className="mt-0.5 truncate text-[11px] text-ink-muted">
-                            {sp.name} · {sp.roleTitle[locale]} {sp.flagEmoji}{" "}
-                            {sp.country[locale]}
-                          </p>
-                        </div>
-                        <span
-                          className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full ${selected
-                              ? "bg-royal-900 text-gold-300"
-                              : "border border-slate-300 bg-white"
-                            }`}
-                        >
-                          {selected ? <Check className="h-3 w-3" /> : null}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
               </div>
 
               <div>
@@ -741,7 +748,10 @@ export function OnboardingWizard() {
                           key={sp.id}
                           className="rounded-full bg-royal-900/8 px-3 py-1 text-xs font-semibold text-royal-900"
                         >
-                          {sp.masterclassFocus[locale]} · {sp.name}
+                          {sp.masterclassSchedule
+                            ? `${sp.masterclassSchedule.dayBadge[locale]} · `
+                            : ""}
+                          {sp.masterclassFocus[locale]} ({sp.name})
                         </span>
                       ))}
                     </dd>

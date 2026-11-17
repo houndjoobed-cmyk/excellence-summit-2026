@@ -33,7 +33,7 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(getPublicSiteOrigin()),
-  title: "Excellence Summit 2026 · Masterclasses & Convention — Houekin Ministries Int.",
+  title: "Excellence Summit 2026 · Masterclass & Convention — Houekin Ministries Int.",
   description:
     "1re Convention/26 — Bâtir une génération prophétique & royale. Du 01 au 06 décembre 2026 à Abomey-Calavi & Cotonou. Inscription gratuite avec badge QR officiel.",
   icons: {
@@ -44,19 +44,19 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     siteName: "Excellence Summit 2026",
     title:
-      "Excellence Summit 2026 · Masterclasses & Convention — Houekin Ministries Int.",
+      "Excellence Summit 2026 · Masterclass & Convention — Houekin Ministries Int.",
     description:
       "1re Convention/26 — Bâtir une génération prophétique & royale. Du 01 au 06 décembre 2026 à Abomey-Calavi & Cotonou. Inscription gratuite avec badge QR officiel.",
     images: [
       {
         url: "/images/poster-convention.webp",
-        alt: "Excellence Summit 2026 — Masterclasses & Convention",
+        alt: "Excellence Summit 2026 — Masterclass & Convention",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Excellence Summit 2026 · Masterclasses & Convention",
+    title: "Excellence Summit 2026 · Masterclass & Convention",
     description:
       "1re Convention/26 — Bâtir une génération prophétique & royale. Du 01 au 06 décembre 2026 à Abomey-Calavi & Cotonou.",
     images: ["/images/poster-convention.webp"],

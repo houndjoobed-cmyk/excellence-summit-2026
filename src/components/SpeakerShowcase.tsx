@@ -64,6 +64,11 @@ export function SpeakerCard({
             <h3 className="mt-1 font-display font-bold text-white text-2xl/snug">
               {profile.name}
             </h3>
+            {profile.masterclassSchedule ? (
+              <p className="mt-1.5 inline-block rounded-full border border-gold-400/35 bg-gold-400/12 px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-gold-200">
+                {profile.masterclassSchedule.dayBadge[locale]}
+              </p>
+            ) : null}
             <p className="mt-2 line-clamp-2 text-white/75 text-xs/relaxed">
               {profile.masterclassFocus[locale]}
             </p>
@@ -171,6 +176,11 @@ export function SpeakerModal({
                     <Sparkles className="size-3.5" />
                     <span>{t.speakersSection.focusLabel}</span>
                   </p>
+                  {profile.masterclassSchedule ? (
+                    <p className="mt-1 text-xs font-semibold text-white/90">
+                      {profile.masterclassSchedule.dateTime[locale]}
+                    </p>
+                  ) : null}
                   <p className="mt-1 text-sm font-medium text-gold-200">
                     {profile.masterclassFocus[locale]}
                   </p>

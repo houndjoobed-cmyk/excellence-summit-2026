@@ -224,7 +224,7 @@ export interface Dictionary {
 
 const FR_DICT: Dictionary = {
   meta: {
-    homeTitle: "Excellence Summit 2026 · Masterclasses & Convention — Houekin Ministries Int.",
+    homeTitle: "Excellence Summit 2026 · Masterclass & Convention — Houekin Ministries Int.",
     speakersTitle: "Orateurs & Hôtes · Excellence Summit 2026",
     badgeTitle: "Retrouver mon Badge QR · Excellence Summit 2026",
     dashboardTitle: "Dashboard de suivi & Vérification QR · Excellence Summit 2026",
@@ -247,19 +247,19 @@ const FR_DICT: Dictionary = {
     themePrefix: "1re Convention/26 · Thème :",
     themeQuote: "« Bâtir une génération prophétique & royale »",
     subtitle:
-      "Six jours de convention et de masterclasses d'exception animées par 4 orateurs internationaux. Obtenez votre numéro unique et votre badge QR actif immédiatement.",
-    ctaPrimary: "M'inscrire aux Masterclasses",
+      "Six jours de convention et de sessions de masterclass d'exception animées par 4 orateurs internationaux. Obtenez votre numéro unique et votre badge QR actif immédiatement.",
+    ctaPrimary: "M'inscrire à la Masterclass",
     ctaSecondary: "Découvrir les 4 orateurs",
     ctaBadge: "Retrouver mon badge",
     datePill: "01 – 06 Décembre 2026",
     venuePill: "Cité d'Excellence · Abomey-Calavi & Salle Gratitude · Arconville",
-    scrollCue: "Découvrir le programme et les masterclasses",
+    scrollCue: "Découvrir le programme et la masterclass",
   },
   facts: {
     daysValue: "01 – 06 Déc.",
     daysLabel: "6 jours de convention 2026",
     scheduleValue: "09h–12h · 19h–21h",
-    scheduleLabel: "Masterclasses & Plénières (Mer–Ven)",
+    scheduleLabel: "Masterclass & Plénières (Mer–Ven)",
     venuesValue: "2 Lieux",
     venuesLabel: "Cité d'Excellence & Salle Gratitude (Arconville)",
     accessValue: "Pass QR Unique",
@@ -283,8 +283,8 @@ const FR_DICT: Dictionary = {
         text: "Exercer un leadership d'intégrité et d'influence durable dans votre sphère.",
       },
       {
-        title: "Masterclasses Pratiques",
-        text: "Des sessions matinales ciblées avec les 4 orateurs pour ancrer la mise en œuvre.",
+        title: "Masterclass Pratique",
+        text: "Des sessions matinales ciblées avec nos orateurs pour ancrer la mise en œuvre.",
       },
       {
         title: "Transmission & Impact",
@@ -305,7 +305,7 @@ const FR_DICT: Dictionary = {
     eyebrow: "Les 4 Orateurs Invités",
     heading: "Dirigée par 4 voix d'impact international",
     subheading:
-      "Découvrez les quatre orateurs principaux qui animeront les masterclasses et sessions plénières d'Excellence Summit 2026.",
+      "Découvrez les quatre orateurs principaux qui animeront la masterclass et les sessions plénières d'Excellence Summit 2026.",
     hostsEyebrow: "Couple Prophétique Hôte",
     hostsHeading: "Drs Augustine & Fidèle HOUEKIN",
     hostsSubtitle:
@@ -317,21 +317,21 @@ const FR_DICT: Dictionary = {
     registerCta: "Réserver ma place",
   },
   onboarding: {
-    eyebrow: "Onboarding Masterclasses",
+    eyebrow: "Onboarding Masterclass",
     heading: "Obtenez votre Pass QR en 3 étapes",
     subheading:
       "Inscription gratuite avec génération immédiate de votre numéro d'accès unique ES26 et envoi par e-mail.",
     steps: [
-      "Identité & Contact",
-      "Profil & Masterclasses",
+      "Choix Masterclass",
+      "Identité & Profil",
       "Confirmation & Badge",
     ],
-    step1Title: "Faisons connaissance",
+    step1Title: "Choisissez votre Masterclass",
     step1Desc:
-      "Vos coordonnées permettent de générer votre pass nominatif et de vous l'envoyer par e-mail.",
-    step2Title: "Votre profil & préférences",
+      "Sélectionnez la ou les sessions du matin (à partir de 09h00) auxquelles vous souhaitez participer.",
+    step2Title: "Vos informations & profil",
     step2Desc:
-      "Votre pass inclut toutes les sessions des 4 orateurs. Indiquez ce que vous attendez le plus.",
+      "Renseignez vos coordonnées et disponibilités pour générer votre pass nominatif.",
     step3Title: "Vérification & Engagement",
     step3Desc:
       "Relisez vos informations puis validez pour révéler instantanément votre numéro et votre QR code.",
@@ -386,7 +386,7 @@ const FR_DICT: Dictionary = {
       reviewTitle: "Récapitulatif de votre inscription",
       identityLabel: "Participant",
       profileLabel: "Profil",
-      focusLabel: "Masterclasses",
+      focusLabel: "Masterclass",
       instantNote: "Délivrance immédiate : votre QR code sera actif dès validation.",
     },
     success: {
@@ -439,7 +439,7 @@ const FR_DICT: Dictionary = {
     checkInHistoryTitle: "Pointages enregistrés à l'entrée",
     noCheckInsYet: "Aucun passage encore enregistré pour cette convention.",
     verifiedBanner: "Vérification cryptographique valide",
-    passHeader: "PASS OFFICIEL · MASTERCLASSES",
+    passHeader: "PASS OFFICIEL · MASTERCLASS",
     passHolder: "Participant",
     passRef: "Référence",
     passDates: "01 – 06 Déc. 2026",
@@ -458,7 +458,7 @@ const FR_DICT: Dictionary = {
   support: {
     fabLabel: "Poser une question à l'équipe",
     title: "Équipe Excellence Summit",
-    subtitle: "Une question sur les masterclasses, l'accueil ou votre badge ?",
+    subtitle: "Une question sur la masterclass, l'accueil ou votre badge ?",
     nameLabel: "Nom complet",
     emailLabel: "Adresse e-mail",
     phoneLabel: "Téléphone / WhatsApp (optionnel)",
@@ -486,7 +486,7 @@ const FR_DICT: Dictionary = {
 
 const EN_DICT: Dictionary = {
   meta: {
-    homeTitle: "Excellence Summit 2026 · Masterclasses & Convention — Houekin Ministries Int.",
+    homeTitle: "Excellence Summit 2026 · Masterclass & Convention — Houekin Ministries Int.",
     speakersTitle: "Speakers & Hosts · Excellence Summit 2026",
     badgeTitle: "Find My QR Badge · Excellence Summit 2026",
     dashboardTitle: "Tracking & QR Verification Dashboard · Excellence Summit 2026",
@@ -509,19 +509,19 @@ const EN_DICT: Dictionary = {
     themePrefix: "1st Convention/26 · Theme:",
     themeQuote: "“Building a Prophetic & Royal Generation”",
     subtitle:
-      "Six days of convention and high-impact masterclasses led by 4 international guest speakers. Receive your unique reference ID and active QR badge immediately.",
-    ctaPrimary: "Register for Masterclasses",
+      "Six days of convention and high-impact masterclass sessions led by 4 international guest speakers. Receive your unique reference ID and active QR badge immediately.",
+    ctaPrimary: "Register for Masterclass",
     ctaSecondary: "Meet the 4 Speakers",
     ctaBadge: "Find my badge",
     datePill: "December 01 – 06, 2026",
     venuePill: "Cité d'Excellence · Abomey-Calavi & Salle Gratitude · Arconville",
-    scrollCue: "Explore the schedule and masterclasses",
+    scrollCue: "Explore the schedule and masterclass",
   },
   facts: {
     daysValue: "Dec 01 – 06",
     daysLabel: "6-day 2026 convention",
     scheduleValue: "09:00–12:00 · 19:00–21:00",
-    scheduleLabel: "Masterclasses & Plenaries (Wed–Fri)",
+    scheduleLabel: "Masterclass & Plenaries (Wed–Fri)",
     venuesValue: "2 Venues",
     venuesLabel: "Cité d'Excellence & Salle Gratitude (Arconville)",
     accessValue: "Single QR Pass",
@@ -545,8 +545,8 @@ const EN_DICT: Dictionary = {
         text: "Lead with integrity, excellence, and lasting influence across your sphere.",
       },
       {
-        title: "Hands-on Masterclasses",
-        text: "Focused morning sessions with the 4 speakers designed for real execution.",
+        title: "Hands-on Masterclass",
+        text: "Focused morning sessions with our guest speakers designed for real execution.",
       },
       {
         title: "Impartation & Legacy",
@@ -567,7 +567,7 @@ const EN_DICT: Dictionary = {
     eyebrow: "The 4 Guest Speakers",
     heading: "Led by 4 voices of global impact",
     subheading:
-      "Meet the four keynote speakers leading the masterclasses and plenary gatherings of Excellence Summit 2026.",
+      "Meet the four keynote speakers leading the masterclass sessions and plenary gatherings of Excellence Summit 2026.",
     hostsEyebrow: "Prophetic Host Couple",
     hostsHeading: "Drs Augustine & Fidèle HOUEKIN",
     hostsSubtitle:
@@ -584,16 +584,16 @@ const EN_DICT: Dictionary = {
     subheading:
       "Complimentary registration with instant generation of your unique ES26 access number and email confirmation.",
     steps: [
-      "Identity & Contact",
-      "Profile & Masterclasses",
+      "Masterclass Choice",
+      "Identity & Profile",
       "Confirmation & Badge",
     ],
-    step1Title: "Tell us who you are",
+    step1Title: "Choose your Masterclass",
     step1Desc:
-      "Your details are used to generate your personal pass and deliver it to your inbox.",
-    step2Title: "Your profile & preferences",
+      "Select one or more morning sessions (starting at 09:00) you plan to attend.",
+    step2Title: "Your details & profile",
     step2Desc:
-      "Your pass covers all 4 speakers' sessions. Share which tracks excite you most.",
+      "Provide your contact details and availability to generate your personal pass.",
     step3Title: "Review & Commitment",
     step3Desc:
       "Review your summary and submit to reveal your registration number and QR badge right away.",
@@ -630,7 +630,7 @@ const EN_DICT: Dictionary = {
       referralSource: "How did you hear about Excellence Summit?",
       referralPlaceholder: "Select an option",
       acceptedCommitment:
-        "I commit to attending the masterclasses and convention sessions faithfully.",
+        "I commit to attending the masterclass and convention sessions faithfully.",
       acceptedPrivacy:
         "I agree that my details may be used to issue my badge and manage event check-in.",
     },
@@ -648,7 +648,7 @@ const EN_DICT: Dictionary = {
       reviewTitle: "Registration Summary",
       identityLabel: "Participant",
       profileLabel: "Profile",
-      focusLabel: "Masterclasses",
+      focusLabel: "Masterclass",
       instantNote: "Instant issuance: your QR code activates immediately upon submission.",
     },
     success: {
@@ -701,7 +701,7 @@ const EN_DICT: Dictionary = {
     checkInHistoryTitle: "Recorded Session Check-ins",
     noCheckInsYet: "No check-ins recorded yet for this convention.",
     verifiedBanner: "Cryptographic verification valid",
-    passHeader: "OFFICIAL PASS · MASTERCLASSES",
+    passHeader: "OFFICIAL PASS · MASTERCLASS",
     passHolder: "Attendee",
     passRef: "Reference",
     passDates: "Dec 01 – 06, 2026",
@@ -720,7 +720,7 @@ const EN_DICT: Dictionary = {
   support: {
     fabLabel: "Ask the team a question",
     title: "Excellence Summit Team",
-    subtitle: "Need help with the masterclasses, venue, or your badge?",
+    subtitle: "Need help with the masterclass, venue, or your badge?",
     nameLabel: "Full name",
     emailLabel: "Email address",
     phoneLabel: "Phone / WhatsApp (optional)",

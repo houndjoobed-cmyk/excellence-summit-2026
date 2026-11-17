@@ -79,8 +79,11 @@ export const CONVENTION_SESSIONS: ConventionSession[] = [
     key: "day2-morning",
     dayShort: { fr: "Mer. 02 · Matin", en: "Wed Dec 02 · AM" },
     dateLabel: { fr: "Mercredi 02 déc. 2026", en: "Wednesday, Dec 02, 2026" },
-    timeLabel: "09h00 – 12h00",
-    title: { fr: "Session matinale · Masterclasses", en: "Morning Session · Masterclasses" },
+    timeLabel: "Dès 09h00",
+    title: {
+      fr: "Matinée Masterclass · Mike Jocktane",
+      en: "Morning Masterclass · Mike Jocktane",
+    },
     venue: {
       fr: "Cité d'Excellence · Abomey-Calavi",
       en: "Cité d'Excellence · Abomey-Calavi",
@@ -101,8 +104,11 @@ export const CONVENTION_SESSIONS: ConventionSession[] = [
     key: "day3-morning",
     dayShort: { fr: "Jeu. 03 · Matin", en: "Thu Dec 03 · AM" },
     dateLabel: { fr: "Jeudi 03 déc. 2026", en: "Thursday, Dec 03, 2026" },
-    timeLabel: "09h00 – 12h00",
-    title: { fr: "Session matinale · Masterclasses", en: "Morning Session · Masterclasses" },
+    timeLabel: "Dès 09h00",
+    title: {
+      fr: "Matinée Masterclass · Dieunedort Kamdem",
+      en: "Morning Masterclass · Dieunedort Kamdem",
+    },
     venue: {
       fr: "Cité d'Excellence · Abomey-Calavi",
       en: "Cité d'Excellence · Abomey-Calavi",
@@ -123,8 +129,11 @@ export const CONVENTION_SESSIONS: ConventionSession[] = [
     key: "day4-morning",
     dayShort: { fr: "Ven. 04 · Matin", en: "Fri Dec 04 · AM" },
     dateLabel: { fr: "Vendredi 04 déc. 2026", en: "Friday, Dec 04, 2026" },
-    timeLabel: "09h00 – 12h00",
-    title: { fr: "Session matinale · Masterclasses", en: "Morning Session · Masterclasses" },
+    timeLabel: "Dès 09h00",
+    title: {
+      fr: "Matinée Masterclass · Mawuena Drah",
+      en: "Morning Masterclass · Mawuena Drah",
+    },
     venue: {
       fr: "Cité d'Excellence · Abomey-Calavi",
       en: "Cité d'Excellence · Abomey-Calavi",
@@ -143,10 +152,10 @@ export const CONVENTION_SESSIONS: ConventionSession[] = [
   },
   {
     key: "day5-royal",
-    dayShort: { fr: "Sam. 05 · Royal", en: "Sat Dec 05 · Royal" },
+    dayShort: { fr: "Sam. 05 · Impactation", en: "Sat Dec 05 · Impartation" },
     dateLabel: { fr: "Samedi 05 déc. 2026", en: "Saturday, Dec 05, 2026" },
     timeLabel: "09h00 – 13h00",
-    title: { fr: "Culte Royal", en: "Royal Service" },
+    title: { fr: "Culte d'Impactation", en: "Impartation Service" },
     venue: {
       fr: "Cité d'Excellence · Abomey-Calavi",
       en: "Cité d'Excellence · Abomey-Calavi",
@@ -190,22 +199,36 @@ export const PROGRAMME_BLOCKS: ProgrammeBlock[] = [
     dateBadge: { fr: "MER. 02 – VEN. 04 DÉC.", en: "WED 02 – FRI 04 DEC" },
     dayRange: { fr: "3 jours intensifs", en: "3 Intensive Days" },
     title: {
-      fr: "Masterclasses & Plénières",
-      en: "Masterclasses & Plenaries",
+      fr: "Masterclass & Plénières",
+      en: "Masterclass & Plenaries",
     },
     slots: [
       {
-        time: "09h – 12h",
+        time: "Mer. 02 · 09h",
         label: {
-          fr: "Session matinale · Masterclasses avec les 4 orateurs invités",
-          en: "Morning Session · Masterclasses with the 4 guest speakers",
+          fr: "Matinée Masterclass · Évêque Mike Jocktane : « Révéler les talents, propulser les entrepreneurs »",
+          en: "Morning Masterclass · Bishop Mike Jocktane: “Revealing Talents, Propelling Entrepreneurs”",
+        },
+      },
+      {
+        time: "Jeu. 03 · 09h",
+        label: {
+          fr: "Matinée Masterclass · Archevêque Dieunedort Kamdem : « Commencer l'entrepreneuriat avec 0 franc »",
+          en: "Morning Masterclass · Archbishop Dieunedort Kamdem: “Starting Entrepreneurship with 0 Francs”",
+        },
+      },
+      {
+        time: "Ven. 04 · 09h",
+        label: {
+          fr: "Matinée Masterclass · Apôtre Mawuena Drah : « Ministère prophétique »",
+          en: "Morning Masterclass · Apostle Mawuena Drah: “Prophetic Ministry”",
         },
       },
       {
         time: "19h – 21h",
         label: {
-          fr: "Session du soir · Enseignement, impartation & ministère prophétique",
-          en: "Evening Session · Teaching, impartation & prophetic ministry",
+          fr: "Sessions du soir (Mer–Ven) · Enseignement, impactation & ministère prophétique",
+          en: "Evening Sessions (Wed–Fri) · Teaching, impartation & prophetic ministry",
         },
       },
     ],
@@ -216,13 +239,13 @@ export const PROGRAMME_BLOCKS: ProgrammeBlock[] = [
     id: "culte-royal",
     dateBadge: { fr: "SAM. 05 DÉC.", en: "SAT DEC 05" },
     dayRange: { fr: "Matinée solennelle", en: "Solemn Morning" },
-    title: { fr: "Culte Royal", en: "Royal Service" },
+    title: { fr: "Culte d'Impactation", en: "Impartation Service" },
     slots: [
       {
         time: "09h – 13h",
         label: {
-          fr: "Consécration, activation des appels & parole de destinée royale",
-          en: "Consecration, calling activation & word of royal destiny",
+          fr: "Culte d'impactation, consécration & activation des appels",
+          en: "Impartation service, consecration & calling activation",
         },
       },
     ],
