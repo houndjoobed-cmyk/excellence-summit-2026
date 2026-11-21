@@ -5,6 +5,7 @@ import {
   Plus_Jakarta_Sans,
 } from "next/font/google";
 import type { ReactNode } from "react";
+import { ClarityAnalytics } from "@/components/ClarityAnalytics";
 import { LocaleProvider } from "@/components/LocaleProvider";
 import { getPublicSiteOrigin } from "@/lib/site";
 import "./globals.css";
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${cormorant.variable} ${jakarta.variable} ${jetbrains.variable}`}
     >
       <body className="min-h-screen bg-[#fafaf7] text-[#071338] antialiased">
+        <ClarityAnalytics />
         <LocaleProvider>{children}</LocaleProvider>
       </body>
     </html>
