@@ -8,6 +8,7 @@ import { useEffect, useRef } from "react";
 import { useLocale } from "@/components/LocaleProvider";
 import { TiltGlowCard } from "@/components/MotionPrimitives";
 import type { SpeakerProfile } from "@/data/speakers";
+import { setClarityTag, trackClarityEvent } from "@/lib/clarity";
 
 export function SpeakerCard({
   profile,
@@ -76,7 +77,11 @@ export function SpeakerCard({
 
           <button
             type="button"
-            onClick={() => onSelect(profile)}
+            onClick={() => {
+              setClarityTag("viewed_speaker", profile.id);
+              trackClarityEvent("speaker_modal_opened");
+              onSelect(profile);
+            }}
             className="mt-4 inline-flex items-center justify-between rounded-xl border border-white/15 bg-white/8 px-3.5 py-2.5 text-xs font-semibold text-gold-200 transition-colors hover:border-gold-400/50 hover:bg-gold-400/15 active:scale-[0.98]"
           >
             <span>{t.speakersSection.viewBio}</span>

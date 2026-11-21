@@ -1,26 +1,23 @@
 "use client";
 
-import Clarity from "@microsoft/clarity";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-
-let clarityInitialized = false;
+import { useLocale } from "@/components/LocaleProvider";
+import { initClarity, setClarityTag } from "@/lib/clarity";
 
 /**
- * Initializes Microsoft Clarity on public pages while excluding admin dashboard routes.
+ * Mounts Microsoft Clarity on public pages and tags sessions with the active locale.
  */
 export function ClarityAnalytics() {
   const pathname = usePathname();
+  const { locale } = useLocale();
 
   useEffect(() => {
-    const projectId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID?.trim();
-    if (!projectId || clarityInitialized || pathname?.startsWith("/dashboard")) {
-      return;
+    const active = initClarity(pathname);
+    if (active && !pathname?.startsWith("/dashboard")) {
+      setClarityTag("locale", locale);
     }
-
-    Clarity.init(projectId);
-    clarityInitialized = true;
-  }, [pathname]);
+  }, [pathname, locale]);
 
   return null;
 }

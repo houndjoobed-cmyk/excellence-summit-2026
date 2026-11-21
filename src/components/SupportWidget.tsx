@@ -11,6 +11,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "@/components/LocaleProvider";
 import { EVENT_INFO } from "@/data/event";
+import { trackClarityEvent, upgradeClaritySession } from "@/lib/clarity";
 
 export function SupportWidget() {
   const { locale, t } = useLocale();
@@ -62,10 +63,13 @@ export function SupportWidget() {
           error?: { message?: string };
         } | null;
         setErrorMsg(data?.error?.message || t.onboarding.errors.generic);
+        trackClarityEvent("support_message_error");
+        upgradeClaritySession("support_message_error");
         setSubmitting(false);
         return;
       }
 
+      trackClarityEvent("support_message_sent");
       setSent(true);
       setName("");
       setEmail("");
@@ -73,6 +77,8 @@ export function SupportWidget() {
       setMessage("");
     } catch {
       setErrorMsg(t.onboarding.errors.generic);
+      trackClarityEvent("support_message_error");
+      upgradeClaritySession("support_message_error");
     } finally {
       setSubmitting(false);
     }
@@ -83,7 +89,10 @@ export function SupportWidget() {
       <button
         ref={fabRef}
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          trackClarityEvent("support_widget_opened");
+          setOpen(true);
+        }}
         aria-label={t.support.fabLabel}
         className="no-print fixed right-5 bottom-5 z-40 inline-flex h-13 w-13 items-center justify-center rounded-full border border-gold-400/50 bg-royal-900 text-gold-300 shadow-[0_12px_32px_rgba(4,18,71,0.45)] transition-transform hover:scale-105 hover:bg-royal-800 active:scale-[0.96]"
       >
@@ -257,6 +266,7 @@ export function SupportWidget() {
                         href={`https://wa.me/${c.wa}`}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => trackClarityEvent("support_whatsapp_clicked")}
                         className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800 hover:bg-emerald-100"
                       >
                         <PhoneCall className="h-3.5 w-3.5" />

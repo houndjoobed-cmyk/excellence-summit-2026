@@ -18,6 +18,12 @@ import { BadgePassCard, type BadgePassData } from "@/components/BadgePassCard";
 import { useLocale } from "@/components/LocaleProvider";
 import { DOMAINS, REFERRAL_SOURCES } from "@/data/event";
 import { MASTERCLASS_SPEAKERS } from "@/data/speakers";
+import {
+  identifyClarityBadge,
+  setClarityTag,
+  trackClarityEvent,
+  upgradeClaritySession,
+} from "@/lib/clarity";
 
 const COUNTRY_DIAL_CODES = [
   { code: "+229", label: "🇧🇯 +229 (Bénin)" },
@@ -153,8 +159,15 @@ export function OnboardingWizard() {
   function goNext() {
     setFieldError(null);
     if (step === 1 && validateStep1()) {
+      setClarityTag("masterclass", form.preferredSpeakers);
+      trackClarityEvent("registration_step_1_completed");
       setStep(2);
     } else if (step === 2 && validateStep2()) {
+      setClarityTag("domain", form.domain);
+      setClarityTag("referral_source", form.referralSource);
+      setClarityTag("preferred_slot", form.preferredTimeSlot);
+      setClarityTag("attending_sunday", form.attendingSunday ? "yes" : "no");
+      trackClarityEvent("registration_step_2_completed");
       setStep(3);
     }
   }
@@ -209,18 +222,28 @@ export function OnboardingWizard() {
         if (data?.error?.code === "DUPLICATE_EMAIL") {
           setDuplicateError(true);
           setFieldError(t.onboarding.errors.duplicateEmail);
-        } else if (data?.error?.code === "DB_NOT_CONFIGURED") {
-          setFieldError(t.onboarding.errors.dbNotConfigured);
+          trackClarityEvent("registration_duplicate_email");
         } else {
-          setFieldError(data?.error?.message || t.onboarding.errors.generic);
+          if (data?.error?.code === "DB_NOT_CONFIGURED") {
+            setFieldError(t.onboarding.errors.dbNotConfigured);
+          } else {
+            setFieldError(data?.error?.message || t.onboarding.errors.generic);
+          }
+          trackClarityEvent("registration_error");
+          upgradeClaritySession("registration_error");
         }
         setSubmitting(false);
         return;
       }
 
+      identifyClarityBadge(data.registration.badgeCode);
+      setClarityTag("email_sent", data.registration.emailSent ? "yes" : "no");
+      trackClarityEvent("registration_completed");
       setCreatedBadge(data.registration);
     } catch {
       setFieldError(t.onboarding.errors.generic);
+      trackClarityEvent("registration_error");
+      upgradeClaritySession("registration_error");
     } finally {
       setSubmitting(false);
     }

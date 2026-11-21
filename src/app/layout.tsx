@@ -71,8 +71,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${cormorant.variable} ${jakarta.variable} ${jetbrains.variable}`}
     >
       <body className="min-h-screen bg-[#fafaf7] text-[#071338] antialiased">
-        <ClarityAnalytics />
-        <LocaleProvider>{children}</LocaleProvider>
+        <LocaleProvider>
+          <ClarityAnalytics />
+          {children}
+        </LocaleProvider>
       </body>
     </html>
   );

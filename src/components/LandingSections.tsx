@@ -26,6 +26,7 @@ import { OnboardingWizard } from "@/components/OnboardingWizard";
 import { SpeakerCard, SpeakerModal } from "@/components/SpeakerShowcase";
 import { EVENT_INFO, PROGRAMME_BLOCKS } from "@/data/event";
 import { GUEST_SPEAKERS, HOST_COUPLE, type SpeakerProfile } from "@/data/speakers";
+import { trackClarityEvent } from "@/lib/clarity";
 
 export function LandingSections() {
   const { locale, t } = useLocale();
@@ -167,6 +168,7 @@ export function LandingSections() {
           >
             <a
               href="#inscription"
+              onClick={() => trackClarityEvent("cta_register_clicked")}
               className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold-400 px-6 py-3.5 text-sm font-bold text-royal-950 shadow-[0_14px_34px_rgba(243,198,56,0.4)] transition-[background-color,transform,box-shadow] duration-200 hover:bg-gold-300 active:scale-[0.96] sm:w-auto sm:px-7"
             >
               <Sparkles className="h-4 w-4 shrink-0" />
@@ -351,7 +353,10 @@ export function LandingSections() {
 
             <button
               type="button"
-              onClick={() => setFlyerOpen(true)}
+              onClick={() => {
+                trackClarityEvent("programme_flyer_opened");
+                setFlyerOpen(true);
+              }}
               className="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-royal-900/15 bg-ivory px-4 py-2.5 text-xs font-bold text-royal-900 transition-[background-color,color,transform] duration-200 hover:bg-royal-900 hover:text-white active:scale-[0.96]"
             >
               <Eye className="h-4 w-4" />

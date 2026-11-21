@@ -16,6 +16,11 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "@/components/LocaleProvider";
 import { EVENT_INFO } from "@/data/event";
+import {
+  setClarityTag,
+  trackClarityEvent,
+  upgradeClaritySession,
+} from "@/lib/clarity";
 
 export interface BadgePassData {
   badgeCode: string;
@@ -368,6 +373,7 @@ export function BadgePassCard({
   async function handleDownloadPng() {
     setDownloadError(null);
     const ios = isIosDevice();
+    setClarityTag("device_ios", ios ? "yes" : "no");
     const cached =
       cachedAssetsRef.current?.key === cacheKey
         ? cachedAssetsRef.current
@@ -375,9 +381,14 @@ export function BadgePassCard({
 
     if (ios && cached) {
       const outcome = await trySharePngFile(cached.blob, filename, shareTitle);
-      if (outcome === "shared" || outcome === "cancelled") {
+      if (outcome === "shared") {
+        trackClarityEvent("badge_download_ios_share");
         return;
       }
+      if (outcome === "cancelled") {
+        return;
+      }
+      trackClarityEvent("badge_ios_preview_opened");
       setPreviewAssets({ blob: cached.blob, dataUrl: cached.dataUrl });
       return;
     }
@@ -401,14 +412,18 @@ export function BadgePassCard({
       cachedAssetsRef.current = { key: cacheKey, ...assets };
 
       if (ios) {
+        trackClarityEvent("badge_ios_preview_opened");
         setPreviewAssets({ blob: assets.blob, dataUrl: assets.dataUrl });
         return;
       }
 
       const objectUrl = URL.createObjectURL(assets.blob);
       triggerAnchorDownload(objectUrl, filename, 15_000);
+      trackClarityEvent("badge_download_png");
     } catch {
       setDownloadError(t.badgePage.downloadError);
+      trackClarityEvent("badge_download_error");
+      upgradeClaritySession("badge_download_error");
     } finally {
       setDownloading(false);
     }
@@ -422,18 +437,21 @@ export function BadgePassCard({
       shareTitle,
     );
     if (outcome === "shared") {
+      trackClarityEvent("badge_download_ios_share");
       setPreviewAssets(null);
       return;
     }
     if (outcome === "unsupported") {
       const objectUrl = URL.createObjectURL(previewAssets.blob);
       triggerAnchorDownload(objectUrl, filename, 15_000);
+      trackClarityEvent("badge_download_png");
     }
   }
 
   return (
     <div className="mx-auto w-full max-w-xl">
       <motion.div
+        data-clarity-mask="true"
         initial={{ opacity: 0, y: 14, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
@@ -541,7 +559,10 @@ export function BadgePassCard({
 
         <button
           type="button"
-          onClick={() => window.print()}
+          onClick={() => {
+            trackClarityEvent("badge_print");
+            window.print();
+          }}
           className="inline-flex items-center gap-2 rounded-full border border-royal-900/20 bg-white px-5 py-2.5 text-sm font-semibold text-royal-900 shadow-xs transition-colors hover:bg-slate-50 active:scale-[0.96]"
         >
           <Printer className="h-4 w-4" />
@@ -600,6 +621,7 @@ export function BadgePassCard({
             <div className="mt-4 flex justify-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                data-clarity-mask="true"
                 src={previewAssets.dataUrl}
                 alt={shareTitle}
                 className="w-full max-w-[270px] rounded-2xl border border-gold-400/40 shadow-lg"
@@ -619,6 +641,7 @@ export function BadgePassCard({
               <a
                 href={previewAssets.dataUrl}
                 download={filename}
+                onClick={() => trackClarityEvent("badge_download_ios_fallback_link")}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-xs font-semibold text-white transition-colors hover:bg-white/15"
               >
                 <Download className="h-3.5 w-3.5" />
