@@ -19,6 +19,7 @@ import { useLocale } from "@/components/LocaleProvider";
 import { Navbar } from "@/components/Navbar";
 import { SupportWidget } from "@/components/SupportWidget";
 import { TitleSync } from "@/components/TitleSync";
+import { WhatsappGroupBanner } from "@/components/WhatsappGroupBanner";
 import { CONVENTION_SESSIONS } from "@/data/event";
 
 interface LookupBadgeResponse extends BadgePassData {
@@ -206,6 +207,11 @@ function BadgeLookupContent() {
             ) : null}
 
             <BadgePassCard badge={badge} />
+
+            <WhatsappGroupBanner
+              source="badge"
+              className="mx-auto max-w-xl"
+            />
 
             <div className="no-print mx-auto max-w-xl rounded-3xl border border-slate-200 bg-white p-6 shadow-xs">
               <h2 className="flex items-center gap-2 font-display text-2xl font-bold text-royal-900">

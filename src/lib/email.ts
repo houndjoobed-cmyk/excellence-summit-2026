@@ -310,9 +310,15 @@ function buildBadgeEmailHtml(params: BuildBadgeHtmlParams): string {
                 </tr>
               </table>
 
-              <p style="margin:0 0 16px;text-align:center;">
+              <p style="margin:0 0 12px;text-align:center;">
                 <a href="${safeUrl}" style="display:inline-block;background:#f3c638;color:#041247;text-decoration:none;font-weight:700;font-size:14px;padding:12px 24px;border-radius:999px;">
                   ${isEn ? "Open my badge online" : "Ouvrir mon badge en ligne"}
+                </a>
+              </p>
+
+              <p style="margin:0 0 18px;text-align:center;">
+                <a href="${escapeHtml(EVENT_INFO.whatsappGroupUrl)}" style="display:inline-block;background:#059669;color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;padding:12px 24px;border-radius:999px;">
+                  ${isEn ? "Join the official WhatsApp group" : "Rejoindre le groupe WhatsApp officiel"}
                 </a>
               </p>
 

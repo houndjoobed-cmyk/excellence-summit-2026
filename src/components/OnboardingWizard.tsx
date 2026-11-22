@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { BadgePassCard, type BadgePassData } from "@/components/BadgePassCard";
 import { useLocale } from "@/components/LocaleProvider";
+import { WhatsappGroupBanner } from "@/components/WhatsappGroupBanner";
 import { DOMAINS, REFERRAL_SOURCES } from "@/data/event";
 import { MASTERCLASS_SPEAKERS } from "@/data/speakers";
 import {
@@ -272,6 +273,11 @@ export function OnboardingWizard() {
             </span>
           </div>
         </div>
+
+        <WhatsappGroupBanner
+          source="onboarding"
+          className="mx-auto mb-6 max-w-xl"
+        />
 
         <BadgePassCard badge={createdBadge} showBadgePageLink />
 

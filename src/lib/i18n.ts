@@ -143,6 +143,10 @@ export interface Dictionary {
       accessLabel: string;
       accessValue: string;
       keepNotice: string;
+      whatsappStepEyebrow: string;
+      whatsappTitle: string;
+      whatsappDesc: string;
+      whatsappCta: string;
     };
     errors: {
       generic: string;
@@ -400,6 +404,11 @@ const FR_DICT: Dictionary = {
       accessValue: "Pass Global · 4 Orateurs · 01–06 Déc. 2026",
       keepNotice:
         "Présentez ce QR code (ou votre numéro ES26) à l'entrée de chaque session à la Cité d'Excellence et à la Salle des fêtes Gratitude à Arconville.",
+      whatsappStepEyebrow: "Dernière étape recommandée",
+      whatsappTitle: "Rejoignez le groupe WhatsApp officiel",
+      whatsappDesc:
+        "Recevez en direct les rappels d'horaires, les accès aux salles et toutes les informations pratiques de la convention.",
+      whatsappCta: "Rejoindre le groupe WhatsApp",
     },
     errors: {
       generic: "Une erreur est survenue. Veuillez vérifier vos informations.",
@@ -662,6 +671,11 @@ const EN_DICT: Dictionary = {
       accessValue: "All-Access Pass · 4 Speakers · Dec 01–06, 2026",
       keepNotice:
         "Present this QR code (or your ES26 reference) at the entrance for each session at Cité d'Excellence and Salle des fêtes Gratitude in Arconville.",
+      whatsappStepEyebrow: "Recommended final step",
+      whatsappTitle: "Join the Official WhatsApp Group",
+      whatsappDesc:
+        "Receive live schedule reminders, venue updates, and essential convention announcements.",
+      whatsappCta: "Join the WhatsApp Group",
     },
     errors: {
       generic: "Something went wrong. Please check your details and try again.",

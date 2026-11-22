@@ -60,6 +60,7 @@ export const EVENT_INFO = {
     { display: "+229 0196 320 444", href: "tel:+2290196320444", wa: "2290196320444" },
     { display: "+229 01 65 185 630", href: "tel:+2290165185630", wa: "2290165185630" },
   ],
+  whatsappGroupUrl: "https://chat.whatsapp.com/Lb8DgO2eRdXHulwn218TeO",
 } as const;
 
 export const CONVENTION_SESSIONS: ConventionSession[] = [
